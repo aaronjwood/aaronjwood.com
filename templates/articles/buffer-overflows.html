@@ -24,21 +24,23 @@
                 <script src="https://gist.github.com/aaronjwood/22c17b0bf6f271f38cf0db043d814abd.js"></script>
             </div>
             <p>
-                For x86, all we need to do is input 16 characters to make auth point to an address other than 0x0.
+                For x86, all we need to do is input 16 bytes to make auth point to an address other than 0x0.
                 x86-64 is a different story (more bytes are needed) but is still just as exploitable.
-                Can you spot the other flaw with this code? The conditional that checks the auth variable is not checking for a specific value.
+                There's another flaw with this code that makes it even easier to exploit.
+                The conditional that checks the auth variable is not checking for a specific value, only if the value is truthy.
                 This means that whatever value we overflow the address of auth with will satisfy that condition, thus printing "Access granted".
             </p>
             <p>
-                Why not just change the conditional to check to auth == 1? That will fail the conditional, right?
-                Okay, now you've done that and someone goes to enter in 16 "h" characters which has a hex value of 0x68.
-                The auth variable will eventually be overflowed with 0x68, repeating the 68 for each extra "h" character.
-                So now our conditional looks like 0x68 == 1 which is false. How can we get around this?
+                Now let's change the conditional to check for auth == 1 which should now make it impossible to print "Access granted".
+                As an example, if someone now inputs 16 "h" characters (the hex value for "h" is 0x68) then the auth variable will be overflowed with 0x68.
+                So now our conditional looks like 0x68 == 1 (or 0x686868 == 1 if we have more characters past our buffer size) which is false. How can we get around this?
             </p>
             <p>
-                By changing the conditional you've actually opened up a new attack vector.
-                All someone needs to do now is make sure the 16'th character is 0x1 which happens to be the SOH (start of heading) control character.
-                If you're on a shell this means that you just need ^A for the 16th character which will set the address of auth to 0x1.
+                By changing the conditional another attack vector has actually been opened.
+                All someone needs to do now is make sure the 16'th byte is 0x1 which happens to be the SOH (start of heading) control character.
+                If you're on a shell this means that you just need ^A for the 16th byte which will set the address of auth to 0x1.
+                The conditional will then look like 0x1 == 1 which defeats our security check.
+                Note that in this case you cannot pass more 0x1 bytes past the 16th byte, otherwise the conditional could look like 0x10101 == 1 which is false.
             </p>
             <p>
                 There are thousands of different ways to expose a buffer overflow and even more for exploiting them in creative ways.
