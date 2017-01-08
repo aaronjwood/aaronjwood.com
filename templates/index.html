@@ -4,153 +4,159 @@
 {%- endblock -%}
 {% block content %}
     <div class="row">
-        <div class="col-md-12">
-            <div class="page-header text-center">
-                <h2>About Me</h2>
+        <div class="col-md-5">
+            <div class="row">
+                <div class="col-md-12 development-activity">
+                    <div class="page-header text-center">
+                        <h2>Development Activity</h2>
+                    </div>
+                    <div id="loader" class="text-center">
+                        <br/>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="#008cba">
+                            <path transform="translate(2)" d="M0 12 V20 H4 V12z">
+                                <animate attributeName="d"
+                                         values="M0 12 V20 H4 V12z; M0 4 V28 H4 V4z; M0 12 V20 H4 V12z; M0 12 V20 H4 V12z"
+                                         dur="1.2s" repeatCount="indefinite" begin="0" keytimes="0;.2;.5;1"
+                                         keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8;0.2 0.8 0.4 0.8" calcMode="spline"/>
+                            </path>
+                            <path transform="translate(8)" d="M0 12 V20 H4 V12z">
+                                <animate attributeName="d"
+                                         values="M0 12 V20 H4 V12z; M0 4 V28 H4 V4z; M0 12 V20 H4 V12z; M0 12 V20 H4 V12z"
+                                         dur="1.2s" repeatCount="indefinite" begin="0.2" keytimes="0;.2;.5;1"
+                                         keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8;0.2 0.8 0.4 0.8" calcMode="spline"/>
+                            </path>
+                            <path transform="translate(14)" d="M0 12 V20 H4 V12z">
+                                <animate attributeName="d"
+                                         values="M0 12 V20 H4 V12z; M0 4 V28 H4 V4z; M0 12 V20 H4 V12z; M0 12 V20 H4 V12z"
+                                         dur="1.2s" repeatCount="indefinite" begin="0.4" keytimes="0;.2;.5;1"
+                                         keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8;0.2 0.8 0.4 0.8" calcMode="spline"/>
+                            </path>
+                            <path transform="translate(20)" d="M0 12 V20 H4 V12z">
+                                <animate attributeName="d"
+                                         values="M0 12 V20 H4 V12z; M0 4 V28 H4 V4z; M0 12 V20 H4 V12z; M0 12 V20 H4 V12z"
+                                         dur="1.2s" repeatCount="indefinite" begin="0.6" keytimes="0;.2;.5;1"
+                                         keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8;0.2 0.8 0.4 0.8" calcMode="spline"/>
+                            </path>
+                            <path transform="translate(26)" d="M0 12 V20 H4 V12z">
+                                <animate attributeName="d"
+                                         values="M0 12 V20 H4 V12z; M0 4 V28 H4 V4z; M0 12 V20 H4 V12z; M0 12 V20 H4 V12z"
+                                         dur="1.2s" repeatCount="indefinite" begin="0.8" keytimes="0;.2;.5;1"
+                                         keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8;0.2 0.8 0.4 0.8" calcMode="spline"/>
+                            </path>
+                        </svg>
+                    </div>
+                    <div>
+                        <div id="development-activity"></div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">
-            <img class="img-responsive" src="{{ url_for("static", filename="images/me.jpg") }}" alt="Aaron Wood"/>
-        </div>
-        <div class="col-md-9">
-            <p>
-                I'm a passionate software engineer with an affinity for Linux and security.
-                I truly enjoy what I do, so much so that I'd say my work is more of a hobby than a job.
-                Developing new things and learning new languages, techniques, and technology are what makes me happy.
-                While I work primarily on software, I also have experience with cryptography, operating systems, and reverse engineering.
-            </p>
-        </div>
-        <div class="text-center">
-            <h3>Specialties</h3>
-            <p>
-                Go, C#, Java, Python, C++, C, SQL, JavaScript, Bash
-                <br/>
-                MySQL, PostgreSQL, Microsoft SQL Server, Cassandra
-                <br/>
-                .NET, Node.js, Android, Make, Docker, Linux, Git
-            </p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <h3 class="text-center">Certifications</h3>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-offset-2">
-            <div class="col-md-2">
-                <p>
-                    <img src="{{ url_for("static", filename="images/icons/comptia.png") }}" alt="CompTIA"/>
-                    <br/>
-                    <a href="https://www.certmetrics.com/comptia/public/verification.aspx?code=K67S8ESDV344SPS8"
-                       target="_blank">
-                        <strong>Linux+</strong>
-                    </a>
-                    <br/>
-                    <em>CompTIA</em>
-                    <br/>
-                    <small>September 2014</small>
-                </p>
+        <div class="col-md-7">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="page-header text-center">
+                        <h2>About Me</h2>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-2">
-                <p>
-                    <img src="{{ url_for("static", filename="images/icons/lpi.png") }}"
-                         alt="Linux Professional Institute"/>
-                    <br/>
-                    <a href="https://cs.lpi.org/caf/Xamman/certification/verify/LPI000324821/zgslsz64eh"
-                       target="_blank">
-                        <strong>LPIC-1</strong>
-                    </a>
-                    <br/>
-                    <em>Linux Professional Institute</em>
-                    <br/>
-                    <small>September 2014 - September 2019</small>
-                </p>
+            <div class="row">
+                <div class="col-md-12">
+                    <span class="media-left">
+                        <img src="{{ url_for("static", filename="images/me.jpg") }}" alt="Aaron Wood"/>
+                    </span>
+                    <span class="media-body">
+                        <p>
+                            I'm a passionate software engineer with an affinity for Linux and security.
+                            I truly enjoy what I do, so much so that I'd say my work is more of a hobby than a job.
+                            Developing new things and learning new languages, techniques, and technology are what makes me happy.
+                            While I work primarily on software, I also have experience with cryptography, operating systems, and reverse engineering.
+                        </p>
+                    </span>
+                    <div class="text-center">
+                        <h3>Specialties</h3>
+                        <p>
+                            Go, C#, Java, Python, C++, C, SQL, JavaScript, Bash
+                            <br/>
+                            MySQL, PostgreSQL, Microsoft SQL Server, Cassandra
+                            <br/>
+                            .NET, Node.js, Android, Make, Docker, Linux, Git
+                        </p>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-2">
-                <p>
-                    <img src="{{ url_for("static", filename="images/icons/suse.png") }}" alt="SUSE"/>
-                    <br/>
-                    <strong>SUSE Certified Linux Administrator</strong>
-                    <br/>
-                    <em>SUSE</em>
-                    <br/>
-                    <small>September 2014</small>
-                </p>
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="text-center">Certifications</h3>
+                </div>
             </div>
-            <div class="col-md-2">
-                <p>
-                    <img src="{{ url_for("static", filename="images/icons/suse.png") }}" alt="SUSE"/>
-                    <br/>
-                    <strong>SUSE Technical Specialist</strong>
-                    <br/>
-                    <em>SUSE</em>
-                    <br/>
-                    <small>September 2014</small>
-                </p>
-            </div>
-            <div class="col-md-2">
-                <p>
-                    <img src="{{ url_for("static", filename="images/icons/comptia.png") }}" alt="CompTIA"/>
-                    <br/>
-                    <a href="https://www.certmetrics.com/comptia/public/verification.aspx?code=QQEW5NFL5LBQ2476"
-                       target="_blank">
-                        <strong>Security+</strong>
-                    </a>
-                    <br/>
-                    <em>CompTIA</em>
-                    <br/>
-                    <small>August 2013 - August 2016</small>
-                </p>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12 development-activity">
-            <div class="page-header text-center">
-                <h2>Development Activity</h2>
-            </div>
-            <div id="loader" class="text-center">
-                <br/>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="#008cba">
-                    <path transform="translate(2)" d="M0 12 V20 H4 V12z">
-                        <animate attributeName="d"
-                                 values="M0 12 V20 H4 V12z; M0 4 V28 H4 V4z; M0 12 V20 H4 V12z; M0 12 V20 H4 V12z"
-                                 dur="1.2s" repeatCount="indefinite" begin="0" keytimes="0;.2;.5;1"
-                                 keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8;0.2 0.8 0.4 0.8" calcMode="spline"/>
-                    </path>
-                    <path transform="translate(8)" d="M0 12 V20 H4 V12z">
-                        <animate attributeName="d"
-                                 values="M0 12 V20 H4 V12z; M0 4 V28 H4 V4z; M0 12 V20 H4 V12z; M0 12 V20 H4 V12z"
-                                 dur="1.2s" repeatCount="indefinite" begin="0.2" keytimes="0;.2;.5;1"
-                                 keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8;0.2 0.8 0.4 0.8" calcMode="spline"/>
-                    </path>
-                    <path transform="translate(14)" d="M0 12 V20 H4 V12z">
-                        <animate attributeName="d"
-                                 values="M0 12 V20 H4 V12z; M0 4 V28 H4 V4z; M0 12 V20 H4 V12z; M0 12 V20 H4 V12z"
-                                 dur="1.2s" repeatCount="indefinite" begin="0.4" keytimes="0;.2;.5;1"
-                                 keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8;0.2 0.8 0.4 0.8" calcMode="spline"/>
-                    </path>
-                    <path transform="translate(20)" d="M0 12 V20 H4 V12z">
-                        <animate attributeName="d"
-                                 values="M0 12 V20 H4 V12z; M0 4 V28 H4 V4z; M0 12 V20 H4 V12z; M0 12 V20 H4 V12z"
-                                 dur="1.2s" repeatCount="indefinite" begin="0.6" keytimes="0;.2;.5;1"
-                                 keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8;0.2 0.8 0.4 0.8" calcMode="spline"/>
-                    </path>
-                    <path transform="translate(26)" d="M0 12 V20 H4 V12z">
-                        <animate attributeName="d"
-                                 values="M0 12 V20 H4 V12z; M0 4 V28 H4 V4z; M0 12 V20 H4 V12z; M0 12 V20 H4 V12z"
-                                 dur="1.2s" repeatCount="indefinite" begin="0.8" keytimes="0;.2;.5;1"
-                                 keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8;0.2 0.8 0.4 0.8" calcMode="spline"/>
-                    </path>
-                </svg>
-            </div>
-            <br/>
-
-            <div>
-                <div id="development-activity"></div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <div class="col-lg-2">
+                        <p>
+                            <img src="{{ url_for("static", filename="images/icons/comptia.png") }}" alt="CompTIA"/>
+                            <br/>
+                            <a href="https://www.certmetrics.com/comptia/public/verification.aspx?code=K67S8ESDV344SPS8"
+                               target="_blank">
+                                <strong>Linux+</strong>
+                            </a>
+                            <br/>
+                            <em>CompTIA</em>
+                            <br/>
+                            <small>September 2014</small>
+                        </p>
+                    </div>
+                    <div class="col-lg-2">
+                        <p>
+                            <img src="{{ url_for("static", filename="images/icons/lpi.png") }}"
+                                 alt="Linux Professional Institute"/>
+                            <br/>
+                            <a href="https://cs.lpi.org/caf/Xamman/certification/verify/LPI000324821/zgslsz64eh"
+                               target="_blank">
+                                <strong>LPIC-1</strong>
+                            </a>
+                            <br/>
+                            <em>Linux Professional Institute</em>
+                            <br/>
+                            <small>September 2014 - September 2019</small>
+                        </p>
+                    </div>
+                    <div class="col-lg-2">
+                        <p>
+                            <img src="{{ url_for("static", filename="images/icons/suse.png") }}" alt="SUSE"/>
+                            <br/>
+                            <strong>SUSE Certified Linux Administrator</strong>
+                            <br/>
+                            <em>SUSE</em>
+                            <br/>
+                            <small>September 2014</small>
+                        </p>
+                    </div>
+                    <div class="col-lg-2">
+                        <p>
+                            <img src="{{ url_for("static", filename="images/icons/suse.png") }}" alt="SUSE"/>
+                            <br/>
+                            <strong>SUSE Technical Specialist</strong>
+                            <br/>
+                            <em>SUSE</em>
+                            <br/>
+                            <small>September 2014</small>
+                        </p>
+                    </div>
+                    <div class="col-lg-2">
+                        <p>
+                            <img src="{{ url_for("static", filename="images/icons/comptia.png") }}" alt="CompTIA"/>
+                            <br/>
+                            <a href="https://www.certmetrics.com/comptia/public/verification.aspx?code=QQEW5NFL5LBQ2476"
+                               target="_blank">
+                                <strong>Security+</strong>
+                            </a>
+                            <br/>
+                            <em>CompTIA</em>
+                            <br/>
+                            <small>August 2013 - August 2016</small>
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

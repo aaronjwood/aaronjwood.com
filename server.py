@@ -29,7 +29,7 @@ def dev_activity():
         tree = ElementTree.fromstring(data)
         children = tree.findall("{http://www.w3.org/2005/Atom}entry")
         for i in range(len(children)):
-            if i == 10:
+            if i == 5:
                 break
 
             content = children[i].find("{http://www.w3.org/2005/Atom}content").text
