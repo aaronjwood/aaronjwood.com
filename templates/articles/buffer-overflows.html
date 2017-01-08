@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{%- block title -%}
+    Buffer Overflows
+{%- endblock -%}
+{%- block description -%}
+    Understanding buffer overflows and their security consequences.
+{%- endblock -%}
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-header text-center">
+                <h2>{{ self.title() }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>
+                Let's take a look at an insecure piece of C code.
+                Assume that it's a part of a real piece of software that needs to perform an access check,
+                so you can also assume that the code is more realistic in real life and doesn't just check a string entered by the user.
+            </p>
+            <div>
+                <script src="https://gist.github.com/aaronjwood/22c17b0bf6f271f38cf0db043d814abd.js"></script>
+            </div>
+            <p>
+                For x86, all we need to do is input 16 characters to make auth point to an address other than 0x0.
+                x86-64 is a different story (more bytes are needed) but is still just as exploitable.
+                Can you spot the other flaw with this code? The conditional that checks the auth variable is not checking for a specific value.
+                This means that whatever value we overflow the address of auth with will satisfy that condition, thus printing "Access granted".
+            </p>
+            <p>
+                Why not just change the conditional to check to auth == 1? That will fail the conditional, right?
+                Okay, now you've done that and someone goes to enter in 16 "h" characters which has a hex value of 0x68.
+                The auth variable will eventually be overflowed with 0x68, repeating the 68 for each extra "h" character.
+                So now our conditional looks like 0x68 == 1 which is false. How can we get around this?
+            </p>
+            <p>
+                By changing the conditional you've actually opened up a new attack vector.
+                All someone needs to do now is make sure the 16'th character is 0x1 which happens to be the SOH (start of heading) control character.
+                If you're on a shell this means that you just need ^A for the 16th character which will set the address of auth to 0x1.
+            </p>
+            <p>
+                There are thousands of different ways to expose a buffer overflow and even more for exploiting them in creative ways.
+                They are often used to change return addresses which can help sidestep security measures and do pretty much anything you can imagine.
+                If you're able to inject your own code and point an address at it you can go even further like setting up a reverse shell.
+            </p>
+        </div>
+    </div>
+{% endblock %}
