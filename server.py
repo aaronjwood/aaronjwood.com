@@ -15,10 +15,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    res = make_response(render_template("index.html"))
-    res.headers['Cache-Control'] = "no-cache, no-store, must-revalidate"
-
-    return res
+    return render_template("index.html")
 
 
 @app.route("/dev-activity/")
@@ -40,7 +37,10 @@ def dev_activity():
     except urllib2.HTTPError:
         html = "Problem reaching GitHub...is it down?"
 
-    return html
+    res = make_response(html)
+    res.headers['Cache-Control'] = "no-cache, no-store, must-revalidate"
+
+    return res
 
 
 @app.route("/tools/<tool>/")
