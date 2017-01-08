@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{%- block title -%}
+    Hex Generator
+{%- endblock -%}
+{%- block description -%}
+    Converts strings and numbers to hexadecimal.
+{%- endblock -%}
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-header text-center">
+                <h2>Hex Generator</h2>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <label class="radio-inline">
+                <input class="hex-type" name="hex-type" value="String" checked="checked" type="radio"/> String to hex
+            </label>
+            <label class="radio-inline">
+                <input class="hex-type" name="hex-type" value="Decimal" type="radio"/> Decimal to hex
+            </label>
+            <textarea class="form-control" rows="10" id="hex-text"></textarea>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md-12">
+            <div id="hex-values"></div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "employer.html" %}
+{% from "employer.html" import language_icons, tool_icons %}
+{% set employer = "East Coast Publications" %}
+{% set description = "Summary of my work and accomplishments at %s." % employer %}
+{% set title = "Webmaster" %}
+{% set dates = "October 2006 – July 2010" %}
+{% set experiences = [
+"Promoted from Assistant Webmaster to Webmaster in 2009",
+"Worked with a team of developers on internal tools, back-end development, and database design",
+"Developed a custom CMS to dynamically create and manage email campaigns and newsletters",
+"Provided technical support to co-workers for networking, software, and hardware issues"
+] %}
+{% set languages = [
+language_icons['PHP'],
+language_icons['Zend Framework'],
+language_icons['MySQL'],
+language_icons['JavaScript'],
+language_icons['jQuery']
+] %}
+{% set tools = [
+tool_icons['CentOS'],
+tool_icons['Ubuntu Server'],
+tool_icons['Windows Server'],
+tool_icons['MySQL'],
+tool_icons['Apache'],
+"Subversion"
+] %}

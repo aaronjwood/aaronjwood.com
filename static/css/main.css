@@ -1,0 +1,43 @@
+@media (min-width: 768px) {
+    .navbar-nav {
+        margin: 0 auto;
+        display: table;
+        table-layout: fixed;
+        float: none;
+    }
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 35px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 35px;
+}
+
+#password-analysis-table, .password-strength-table {
+    table-layout: fixed;
+    word-wrap: break-word;
+}
+
+.language-icon {
+    width: 75px;
+    height: 75px;
+}
+
+.tool-icon {
+    width: 75px;
+    height: 75px;
+}
+
+#hex-values {
+    word-wrap: break-word;
+}

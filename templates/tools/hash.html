@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{%- block title -%}
+    Hash Generator
+{%- endblock -%}
+{%- block description -%}
+    Generates hashes from the supplied text. NTLM, LM, MD5, SHA1, MySQL, Cisco, LDAP, and more are supported!
+{%- endblock -%}
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-header text-center">
+                <h2>Hash Generator</h2>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <input class="form-control" type="text" id="hash-text"/>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <tbody id="hash-table"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

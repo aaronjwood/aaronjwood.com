@@ -1,0 +1,306 @@
+{% extends "layout.html" %}
+{%- block title -%}
+    Hardening Linux
+{%- endblock -%}
+{%- block description -%}
+    A look into how you can harden Linux and improve the security of your environment.
+{%- endblock -%}
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-header text-center">
+                <h2>Hardening Linux</h2>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>
+                Interested in securing your Linux server/desktop/whatever? Below are some things that I find to be very
+                effective when you want a more secure environment. I will be targeting distros based on Debian, but the
+                below sections currently apply best to Ubuntu server. So many other articles out there go over how to
+                install and configure these tools so I will not be covering those aspects. Instead, I will focus on what
+                I feel are good tools for different areas and will explain why I think they are useful, what they do,
+                and why they should be considered.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="text-center">Kernel</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>
+                One of the first things that I recommend you do is compile the set of patches provided by <a
+                    href="https://grsecurity.net/" target="_blank"><strong>grsecurity</strong></a> into your kernel.
+                This process may take a bit depending on how familiar you are with the steps required. There are many
+                options for what you want to compile in, and there is usually more setup required once the system is
+                running. If you are willing to put in the time for setting this up the benefits are very much worth it.
+            </p>
+
+            <p>
+                <strong>Why would I want to do this?</strong> While it's possible that the security measures put in
+                place by these patches will break certain things in your system and you'll need to tweak some of the
+                protections put in place for specific software (Java for example will need some extra configuration like
+                disabling mprotect) there is a lot to be gained from grsecurity. For starters, the system's
+                implementation of ASLR (address space layout randomization) is improved/hardened, additional checks for
+                bounds and stack overflows are performed, chroot (commonly referred to as jails) is greatly hardened,
+                and lots of other things. Ideally, these patches should help protect you against zero-days and other
+                unknown and/or new exploits which is very valuable. You also gain more flexibility and modularity in
+                targeting what areas of your system you want to harden (and how much you really want to do). Note that
+                many more things are done other than the ones I've listed, and many of them require huge explanations to
+                understand what it is they are doing underneath.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="text-center">Host Intrusion Detection System</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>
+                <a href="https://github.com/Tripwire/tripwire-open-source" target="_blank"><strong>Tripwire</strong></a>
+                is a great tool for this case. You should be able to find this package in the default repositories so
+                you shouldn't need to compile the source and install it yourself. While there is a decent amount of
+                setup and configuration after installation, it is definitely worth it. You can even set it up so that
+                reports are emailed/aggregated/etc. to you however often you would like.
+            </p>
+
+            <p>
+                <strong>Why would I want to do this?</strong> Having a host intrusion detection system is a great way to
+                monitor your system for compromises, attacks, infections, and a slew of other things. You will quickly
+                be able to tell what files are getting touched, in what way, how they were touched, the severity of the
+                operations, etc. Think about this: if someone were to compromise your system and try and escalate their
+                privileges or extract sensitive information, you can generally assume that tools like this will pick up
+                on these activities. That's not to say that there aren't ways of getting around these tools. A highly
+                skilled individual/group will know of some things they can do without worrying about you coming to know
+                about it. For example, if a piece of software is exploited remotely and in a certain way any intrusion
+                detection system will struggle to pick this up. Additionally, if the system is compromised and the
+                attacker has escalated their privileges there's nothing stopping them from silently
+                modifying/corrupting/disabling your intrusion detection system. While it's harder for them to be able to
+                modify your configuration/rules without knowing the password/key to do this, if you have a weak
+                password/key it will be broken. If your password/key is strong and the attacker has administrator-level
+                privileges, other measures can be taken. If your kernel is compromised I would say all bets are off!
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="text-center">Network Intrusion Detection System</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>
+                <a href="https://www.snort.org/" target="_blank"><strong>Snort</strong></a> and <a
+                    href="http://suricata-ids.org/" target="_blank"><strong>Suricata</strong></a> are great tools for
+                this purpose. Use Snort if you are only looking for intrusion detection, and use Suricata if you want
+                intrusion prevention capabilities. Suricata can also function as an intrusion detection system without
+                any intrusion prevention capabilities just like Snort. Personally I would use Suricata going forward as
+                its performance is very good due to its multithreaded design. Suricata can use a lot of the rules that
+                Snort uses so it's easier to switch from one to the other.
+            </p>
+
+            <p>
+                <strong>Why would I want to do this?</strong> These tools make it very easy to detect if you're the
+                victim of a DoS or DDoS attack (at least until the traffic completely overloads your server rendering it
+                unusable). Additionally, you can watch for things like remote exploits being sent over the wire, port
+                scans, exploits being sent to Apache/NGINX, traffic being sent from malware on your network, etc.
+                Honestly there are many use cases for these tools other than what I've listed, making them extremely
+                helpful in aiding you on the network side of things.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="text-center">Dynamic Malicious Activity Banning</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>
+                <a href="http://www.fail2ban.org/wiki/index.php/Main_Page" target="_blank"><strong>Fail2ban</strong></a>
+                is a tool that monitors various logs and dynamically bans IPs that are attempting to do malicious
+                things. A few examples of this are too many failed authentication attempts, exploitation attempts, XSS
+                attempts, etc. Ban times are configurable and actions can also be configured for when you want some
+                event to take place when a malicious activity is being performed. This tool provides a bunch of standard
+                filters for things like Apache, SSH, Postfix, NGINX, etc.
+            </p>
+
+            <p>
+                <strong>Why would I want to do this?</strong> This tool can be used in many ways. You can use it to
+                dynamically ban people from banging on your SSH daemon (brute force attacks), or you could use it to
+                send alerts for when attacks directed at your web applications are detected, or all of the above. It
+                could be a really good way to reduce traffic to certain endpoints of your system based on your rules. To
+                an extent, it could also be used to prevent a DoS attack from bringing your system to a halt. I say "to
+                an extent" because a large enough DDoS attack will overwhelm this thing in a couple of seconds. It would
+                probably be better off against DoS attacks from other machines on your LAN. Again,
+                there are many ways to use this tool, and it supports many more filters than what I've listed above.
+                It's also a good way to just be aware of what's going on with certain pieces of your system.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="text-center">No Passwords</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>
+                Everyone says this but I'll say it again here. Disable the use of passwords for a login mechanism with
+                SSH. Use PKI (public/private keys) instead. Use a 4096-bit key. Don't allow logins with the root user.
+            </p>
+
+            <p>
+                <strong>Why would I want to do this?</strong> Keys are much stronger than any password you can probably
+                easily remember. I also don't buy the argument that it's too computationally expensive to use 4096-bit
+                keys. At the time of this writing (February 2016) we have hardware more than capable of handling crypto
+                operations at high speed. Most CPUs have special instruction sets built into them now to further speed
+                up the operations of encrypting and decrypting. Google, Microsoft, and other tech giants have TLS
+                deployed EVERYWHERE and they have full write-ups on how the performance impact is next to none for them.
+                I'm not saying TLS is the same as SSH authentication but you get the idea.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="text-center">TLS</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>
+                If you've got any web services running serve them over TLS. There is really no excuse
+                anymore to not use TLS. <a href="https://istlsfastyet.com/" target="_blank">Take Google's word for
+                it.</a>
+            </p>
+
+            <p>
+                <strong>Why would I want to do this?</strong> Anything sent over the network that's not encrypted can be
+                easily intercepted and modified. If you think it's not easy to intercept or it will be a hassle for
+                people to do it, know that it's extremely easy to do for a skilled attacker and it won't waste more than
+                a minute or two of their time. Not utilizing TLS can have effects at the most basic level. Lets say you
+                run a news site over plain HTTP. If I intercept and modify the articles that people are reading I can
+                make them think your service is saying whatever I want it to say. If you think about it this could have
+                wide-reaching effects depending on what I inject and how sensitive the subject is to your users.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="text-center">Strong Ciphers</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>
+                <a href="https://cipherli.st/" target="_blank"><strong>Cipherli.st</strong></a> is a great resource to
+                find excellent choices for cipher suites. You'll see that they provide details for Apache, NGINX, the
+                SSH daemon AND client, Lighttpd, HAProxy, Postfix, Exim, Dovecot, MySQL, PostgreSQL, and a few others. I
+                think that many people overlook this step in hardening their systems. <a
+                    href="https://www.ssllabs.com/ssltest/index.html" target="_blank"><strong>Qualys' SSL Server
+                Test</strong></a> tool is a great way to check your configurations. <a
+                    href="https://www.ssllabs.com/ssltest/analyze.html?d=www.amazon.com&s=54.239.26.128&hideResults=on"
+                    target="_blank">Have a look at how well Amazon has configured themselves.</a>
+            </p>
+
+            <p>
+                <strong>Why would I want to do this?</strong> If you're using weak crypto, what's the point? If you're
+                using SSL 3, why bother? If you're using SSL 2, I bet your "secure" links between you and your clients
+                have been broken and decrypted at some point. The whole reason for using secure protocols is because
+                they're secure. Would you use Telnet over SSH? Why not make sure your secure protocols are actually
+                secure and are configured as best as they can be? If you're not taking advantage of this then it's like
+                you're using DES when you could be using AES.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="text-center">Web Applications</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>
+                If you're running any web applications on your machine that you or anyone you know developed, harden
+                them. Look for SQL injection, XSS, CSRF, session fixation, code injection, command injection, and
+                directory traversal vulnerabilities. Consider using <a href="https://www.modsecurity.org/about.html"
+                                                                       target="_blank"><strong>ModSecurity</strong></a>
+                if you're running Apache. If you don't have access to the source or aren't a developer this is where
+                tools like Snort/Suricata, Fail2ban, and Tripwire really come in handy as they will help assist you with
+                this task by just doing what they are made to do.
+            </p>
+
+            <p>
+                <strong>Why would I do this?</strong> Why would you not do this? If you could fix any of the
+                vulnerabilities listed above it will greatly benefit you and your users. Some of the biggest attacks
+                like the one against Sony that took place a few years ago was through blind SQL injection. If you don't
+                think any of the above vulnerabilities are serious in any way, you could be in for a big surprise
+                depending on how skilled the attacker is.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="text-center">LXC</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>
+                Everyone loves Docker these days. There are some other competing offerings coming out such as rkt but
+                let's not talk about any of these. In general, regardless of what tool you decide to use that sits on
+                top (if you decide to that is), run your applications in Linux containers if you can. Basically Linux
+                containers are a very lightweight way to provide kernel-enforced virtualization. This means that all
+                containers on your system will share the same kernel. While you do not get as much isolation as a full
+                virtual machine due to the fact that LXC is provided by the kernel, you do get a lot of isolation in
+                general. If an application is compromised but is running inside of a very limited container with minimal
+                access to the system, you are in much better shape than if the application was compromised while running
+                on the host.
+            </p>
+
+            <p>
+                <strong>Why would I do this?</strong> Using LXC means that your applications will have an additional
+                layer of isolation. You can control how much a container should be isolated and even limit what it
+                should be able to access on the host which makes them very flexible. Think of them as another way of
+                jailing things like how chroot works except that you can control how much CPU and memory they can
+                consume, and how much access they have to the networking stack, filesystem layer, and general OS
+                capabilities (see <a href="http://man7.org/linux/man-pages/man7/capabilities.7.html" target="_blank">Linux
+                capabilities</a>).
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="text-center">Scanners</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>
+                Consider scheduling scans using tools to look for rootkits, backdoors, and exploits. <a
+                    href="http://www.chkrootkit.org/" target="_blank"><strong>chkrootkit</strong></a> and <a
+                    href="http://rkhunter.sourceforge.net/" target="_blank"><strong>rkhunter</strong></a> are a few good
+                tools for this.
+            </p>
+
+            <p>
+                <strong>Why would I do this?</strong> These tools can sometimes help you figure out if a part of your
+                system can be compromised. I wouldn't solely rely on these tools if you suspect you have a rootkit but
+                they are definitely handy for finding binaries that have been replaced, suspicious OS and network
+                modifications, and other things. If you have a rootkit, I wouldn't trust anything that comes back from
+                your kernel into user space.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="text-center">More Stuff Coming Soon!</h3>
+        </div>
+    </div>
+{% endblock %}

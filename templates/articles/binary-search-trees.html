@@ -1,0 +1,182 @@
+{% extends "layout.html" %}
+{%- block title -%}
+    Binary Search Trees - Measuring Six Different Languages
+{%- endblock -%}
+{%- block description -%}
+    A look at the execution time and memory usage taken by six different languages to run through a very large binary
+    search tree.
+{%- endblock -%}
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-header text-center">
+                <h2>Binary Search Trees - Measuring Six Different Languages</h2>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>
+                I thought it would be fun to implement a binary search tree in six different languages, not only to
+                show the implementation differences but to also show the memory/CPU performance results.
+            </p>
+
+            <p>
+                <em>
+                    The results below are based off of a computer running Windows 10 Pro x64 with an Intel Core i7 4770k
+                    processor overclocked to 4.5 GHz and with 16 GB of RAM installed.
+                </em>
+            </p>
+        </div>
+    </div>
+    <div class="row col-md-12 text-center">
+        <h3>C</h3>
+    </div>
+    <div class="row col-md-12 text-center">
+        <table class="table table-hover">
+            <tr>
+                <th>Generating random array with 2,000,000 values</th>
+                <th>Filling tree with 2,000,000 nodes</th>
+                <th>Traversing all 2,000,000 nodes</th>
+                <th>Peak memory used</th>
+            </tr>
+            <tr>
+                <td>22 ms</td>
+                <td>12.86 sec</td>
+                <td>128 ms</td>
+                <td>53 MB</td>
+            </tr>
+        </table>
+    </div>
+    <div class="row col-md-12">
+        <script src="https://gist.github.com/aaronjwood/2780f31768691b1d69ed.js"></script>
+    </div>
+
+    <div class="row col-md-12 text-center">
+        <h3>C#</h3>
+    </div>
+    <div class="row col-md-12 text-center">
+        <table class="table table-hover">
+            <tr>
+                <th>Version</th>
+                <th>Generating random array with 2,000,000 values</th>
+                <th>Filling tree with 2,000,000 nodes</th>
+                <th>Traversing all 2,000,000 nodes</th>
+                <th>Peak memory used</th>
+            </tr>
+            <tr>
+                <td>.NET 4.6/C# 4.0</td>
+                <td>25 ms</td>
+                <td>13.07 sec</td>
+                <td>128 ms</td>
+                <td>58 MB</td>
+            </tr>
+        </table>
+    </div>
+    <div class="row col-md-12">
+        <script src="https://gist.github.com/aaronjwood/7e0fc962c5cd898b3181.js"></script>
+    </div>
+
+    <div class="row col-md-12 text-center">
+        <h3>Java (1.8)</h3>
+    </div>
+    <div class="row col-md-12 text-center">
+        <table class="table table-hover">
+            <tr>
+                <th>Generating random array with 2,000,000 values</th>
+                <th>Filling tree with 2,000,000 nodes</th>
+                <th>Traversing all 2,000,000 nodes</th>
+                <th>Peak memory used</th>
+            </tr>
+            <tr>
+                <td>21 ms</td>
+                <td>12.2 sec</td>
+                <td>126 ms</td>
+                <td>70 MB</td>
+            </tr>
+        </table>
+    </div>
+    <div class="row col-md-12">
+        <script src="https://gist.github.com/aaronjwood/3b4aaa2a4792d7cf2df4.js"></script>
+    </div>
+
+    <div class="row col-md-12 text-center">
+        <h3>Go (1.5.1)</h3>
+    </div>
+    <div class="row col-md-12 text-center">
+        <table class="table table-hover">
+            <tr>
+                <th>Generating random array with 2,000,000 values</th>
+                <th>Filling tree with 2,000,000 nodes</th>
+                <th>Traversing all 2,000,000 nodes</th>
+                <th>Peak memory used</th>
+            </tr>
+            <tr>
+                <td>66 ms</td>
+                <td>12.9 sec</td>
+                <td>130 ms</td>
+                <td>85 MB</td>
+            </tr>
+        </table>
+    </div>
+    <div class="row col-md-12">
+        <script src="https://gist.github.com/aaronjwood/05267d0baaaf7bef803d.js"></script>
+    </div>
+
+    <div class="row col-md-12 text-center">
+        <h3>Python</h3>
+    </div>
+    <div class="row col-md-12 text-center">
+        <table class="table table-hover">
+            <tr>
+                <th>Version</th>
+                <th>Generating random array with 2,000,000 values</th>
+                <th>Filling tree with 2,000,000 nodes</th>
+                <th>Traversing all 2,000,000 nodes</th>
+                <th>Peak memory used</th>
+            </tr>
+            <tr>
+                <td>Python 2.7.10</td>
+                <td>1.9 sec</td>
+                <td>98 sec</td>
+                <td>750 ms</td>
+                <td>377 MB</td>
+            </tr>
+            <tr>
+                <td>Python 3.5.0</td>
+                <td>2.55 sec</td>
+                <td>114.23 sec</td>
+                <td>828 ms</td>
+                <td>220 MB</td>
+            </tr>
+        </table>
+    </div>
+    <div class="row col-md-12">
+        <script src="https://gist.github.com/aaronjwood/916cbe6bd97b5ec41f6c.js"></script>
+    </div>
+
+    <div class="row col-md-12 text-center">
+        <h3>JavaScript</h3>
+    </div>
+    <div class="row col-md-12 text-center">
+        <table class="table table-hover">
+            <tr>
+                <th>Version</th>
+                <th>Generating random array with 2,000,000 values</th>
+                <th>Filling tree with 2,000,000 nodes</th>
+                <th>Traversing all 2,000,000 nodes</th>
+                <th>Peak memory used</th>
+            </tr>
+            <tr>
+                <td>Node.js 5.1.0</td>
+                <td>34.64 ms</td>
+                <td>11.06 sec</td>
+                <td>89.38 ms</td>
+                <td>148 MB</td>
+            </tr>
+        </table>
+    </div>
+    <div class="row col-md-12">
+        <script src="https://gist.github.com/aaronjwood/96ef576fdb55590a3f48.js"></script>
+    </div>
+{% endblock %}

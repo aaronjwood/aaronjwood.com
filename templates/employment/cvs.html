@@ -1,0 +1,57 @@
+{% extends "employer.html" %}
+{% from "employer.html" import language_icons, tool_icons %}
+{% set employer = "CVS Health" %}
+{% set description = "Summary of my work and accomplishments at %s." % employer %}
+{% set title = "Senior Application Developer" %}
+{% set dates = "January 2014 – March 2015" %}
+{% set experiences = [
+"Appointed team lead for application security",
+"Patched critical security holes found in many existing applications",
+"Developed an asynchronous socket server to be used for real-time communication across all applications",
+"Upgraded and tuned a cluster of database servers to increase their performance",
+"Rewrote legacy sign generation application to allow for computation to be distributed across multiple servers and to be executed in parallel (reduced running time from 95 hours to 4 hours)",
+"Responsible for creation of a new sign layout processing engine",
+"Redesigned legacy ETL processes to run in parallel",
+"Increased performance of business-critical applications by optimizing how they use their multibillion-row data sets",
+"Set up continuous integration system to perform static analysis and unit testing on all applications"
+] %}
+{% set languages = [
+language_icons['Python'],
+language_icons['Node.js'],
+language_icons['Express.js'],
+language_icons['Knex.js'],
+language_icons['Swagger'],
+language_icons['Go'],
+language_icons['PHP'],
+language_icons['SQL'],
+language_icons['C#'],
+language_icons['Ruby'],
+language_icons['JavaScript'],
+language_icons['jQuery'],
+language_icons['AngularJS'],
+language_icons['Bootstrap'],
+language_icons['Flask'],
+language_icons['SQLAlchemy'],
+"PDFlib"
+] %}
+{% set tools = [
+tool_icons['CentOS'],
+tool_icons['Ubuntu Server'],
+tool_icons['MySQL'],
+tool_icons['PostgreSQL'],
+tool_icons['Supervisord'],
+tool_icons['Docker'],
+tool_icons['Capistrano'],
+tool_icons['Fabric'],
+tool_icons['Apache'],
+tool_icons['NGINX'],
+tool_icons['Redis'],
+tool_icons['Git'],
+tool_icons['Bitbucket'],
+tool_icons['Stash'],
+tool_icons['Confluence'],
+"JIRA",
+"Graylog",
+"Gearman",
+"Jenkins"
+] %}

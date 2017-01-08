@@ -1,0 +1,85 @@
+{% extends "layout.html" %}
+{%- block title -%}
+Database Engines - MyISAM vs InnoDB
+{%- endblock -%}
+{%- block description -%}
+    A look into the MyISAM and InnoDB storage engines comparing read/write performance, locking, transaction support,
+    and indexing.
+{%- endblock -%}
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-header text-center">
+                <h2>Database engines - MyISAM vs InnoDB</h2>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>
+                Databases are almost always used when building applications whether they are web applications or native
+                applications. Choosing an appropriate database engine is a critical step in the design and planning stage and
+                should not be overlooked. A database engine (sometimes called a storage engine) is the underlying software in a
+                database management system that takes care of creating, reading, updating, and deleting data. This article will
+                be comparing two engines that are commonly used with MySQL, MyISAM and InnoDB. For those unfamiliar with MySQL,
+                it is an open source relational database management system (RDBMS) developed by Oracle. As of June 2013 it is
+                the most widely used open source RDBMS.
+            </p>
+            <p>
+                First of all, MyISAM is generally faster with reads while InnoDB is faster with writes. If you have a table that
+                you know will be handling about as many writes as reads then you’ll want to use InnoDB. Concurrent writes to a
+                MyISAM table will lock the entire table which means that all other changes to that table are held until the
+                write has been completed and the lock has been released. This is the primary reason for why the InnoDB engine is
+                better at handling writes. If you’re trying to perform thousands of writes per second you can imagine what
+                happens to the performance under MyISAM.
+            </p>
+            <p>
+                Secondly, InnoDB now offers full-text indexes as of MySQL 5.6.4 which makes the argument of using MyISAM based
+                upon this feature moot. It’s very possible that you’ll want your tables that are utilizing full-text to be
+                MyISAM anyway if they’re going to be performing a lot of reads. But for tables that need to be both read and
+                written to in addition to having a full-text index InnoDB is possibly a better alternative.
+            </p>
+            <p>
+                Lastly, the simplicity of MyISAM means that you lose a few key features corresponding to data integrity. MyISAM
+                does not support transactions or foreign key constraints. It also is not ACID compliant. Covering ACID and
+                explaining it well would really need its own article but basically it represents a set of properties that
+                guarantee transactions are processed reliably. Recovering from a crash also takes a bit more work since MyISAM
+                tables are prone to corruption after a power failure or some other kind of failure. This isn’t the end of the
+                world though since tables can be repaired by running REPAIR TABLE against a corrupted table.
+            </p>
+            <p>
+                Now lets go over some of the advantages and disadvantages of InnoDB. Support for transactions, foreign key
+                constraints, and row level locking are what makes InnoDB a great choice if your focus is data integrity and
+                write performance. InnoDB is ACID compliant and since it supports transactions you are guaranteed reliability
+                and integrity. Foreign key constraint support means that you can enforce relationships at the database level
+                instead of at the application level. In addition to reducing errors and improving data consistency foreign key
+                constraints can save development time which is always important. Probably one of the biggest advantages that
+                InnoDB has over MyISAM is row level locking. This means that if a row is being inserted, updated, or deleted and
+                there are additional changes that need to be made to the same row, only those changes are held up. This is
+                vastly different from MyISAM’s table level locking which will lock the whole table for situations like this. You
+                can see why InnoDB excels at handling writes and would be a better choice for data-heavy applications. As with
+                MyISAM, InnoDB comes with drawbacks of its own.
+            </p>
+            <p>
+                Since transactions and foreign key constraints can be used with InnoDB this means that your database design will
+                be more complex and potentially take more time to build out. Additionally, you may need to change your
+                application’s underlying code to use transactions effectively and to take full advantage of the benefits they
+                offer. Taking all this into consideration some say that InnoDB is harder for beginners to pick up and understand
+                so there may be an increased learning curve compared to if MyISAM was being used. It was mentioned before that
+                MyISAM is normally faster at handling reads so it’s very possible that your tables using InnoDB will suffer from
+                reduced performance if your application is primarily selecting data from them.
+            </p>
+            <p>
+                Each database engine has its own set of advantages and disadvantages. You’ll want to evaluate what your
+                application’s requirements are such as what kind of data it will be dealing with and how much data you will be
+                consuming in order to pick the correct engine. With the release of MySQL 5.6 InnoDB has become much more
+                attractive due to the incorporation of full-text indexes but you certainly can’t ignore MyISAM’s read
+                performance.
+            </p>
+            <p class="text-center">
+                <a href="{{ url_for("static", filename="docs/mysql-whitepaper.pdf") }}">This article was also published
+                as a whitepaper!</a>
+            </p>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "employer.html" %}
+{% from "employer.html" import language_icons, tool_icons %}
+{% set employer = "ComputerSupport" %}
+{% set description = "Summary of my work and accomplishments at %s." % employer %}
+{% set title = "Web Programmer" %}
+{% set dates = "August 2010 – January 2011" %}
+{% set experiences = [
+"Developed a port scanner, CPU benchmark, and network bandwidth test",
+"Created a mobile web application to manage employee location and status in real-time",
+"Produced various scripts and tools written in C# for technical support engineers",
+"Hardened production servers by disabling weak ciphers, outdated protocols, and SSL renegotiation",
+"Set up multiple dedicated Linux servers to handle production web applications and DNS caching"
+] %}
+{% set languages = [
+language_icons['C#'],
+language_icons['.NET'],
+language_icons['Batch'],
+language_icons['PHP'],
+language_icons['MSSQL'],
+language_icons['JavaScript'],
+language_icons['jQuery']
+] %}
+{% set tools = [
+tool_icons['openSUSE'],
+tool_icons['CentOS'],
+tool_icons['Ubuntu Server'],
+tool_icons['Bind9'],
+tool_icons['Microsoft SQL Server'],
+tool_icons['MySQL'],
+tool_icons['IIS'],
+tool_icons['Apache'],
+"Subversion"
+] %}

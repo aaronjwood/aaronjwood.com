@@ -1,0 +1,41 @@
+{% extends "employer.html" %}
+{% from "employer.html" import language_icons, tool_icons %}
+{% set employer = "Framingham State University" %}
+{% set description = "Summary of my work and accomplishments at %s." % employer %}
+{% set title = "Web Services Manager" %}
+{% set dates = "January 2011 – December 2013" %}
+{% set experiences = [
+"Promoted from Web Manager to Web Services Manager in 2011",
+"Created a multifaceted library that provides APIs in Java, C#, Python, and PHP to improve department productivity. Full support for both Windows and Linux",
+"Worked closely with First-Year Programs to develop an application to automate the management and flow of the university’s placement testing process",
+"Lead developer and coordinator on the university’s mobile web application",
+"Project manager and lead developer on a UI/UX refresh of the IT website and knowledge base",
+"Developed a new tutoring management system for the university",
+"Responsible for penetration testing and hardening of web applications and various internal systems",
+"Programmed complex parking management system for the campus police. Included an authentication back-end written in Java for additional security. All data encrypted with AES-256",
+"Built a real-time analytics application using Node.js and Socket.IO to compliment marketing initiatives"
+] %}
+{% set languages = [
+language_icons['Java'],
+language_icons['Node.js'],
+language_icons['C#'],
+language_icons['.NET'],
+language_icons['PHP'],
+language_icons['MySQL'],
+language_icons['Python'],
+language_icons['JavaScript'],
+language_icons['jQuery'],
+language_icons['jQuery UI'],
+language_icons['jQuery Mobile'],
+language_icons['Apache Cordova']
+] %}
+{% set tools = [
+tool_icons['Red Hat'],
+tool_icons['CentOS'],
+tool_icons['Fedora'],
+tool_icons['Linux Mint'],
+tool_icons['MySQL'],
+tool_icons['Apache'],
+tool_icons['Git'],
+tool_icons['GitLab']
+] %}

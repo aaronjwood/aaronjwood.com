@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+{%- block title -%}
+    Text Analyzer
+{%- endblock -%}
+{%- block description -%}
+    Free and open source tool for analyzing text files written in Java. Analyzes words and word frequency as well as
+    allowing for searching of a specific word.
+{%- endblock -%}
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-header text-center">
+                <h2>Text Analyzer</h2>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <p>
+                Text Analyzer is a free tool for analyzing text files. It can show you the words contained in the text
+                file, find a word, or show the frequency of each word in the text file.
+            </p>
+
+            <h4>How It Works</h4>
+
+            <p>
+                Once the program is running, choose the "Analyze Text" option to select a text file that you want
+                analyzed. The "Map Type" options are completely optional and are only used to show performance
+                differences between the two data structures. If you wish to see the performance differences, simply
+                select the map type that you want to use <em>before</em> selecting the text file you want to analyze.
+            </p>
+
+            <h4>What's New</h4>
+
+            <ul>
+                <li>Initial release</li>
+            </ul>
+
+            <h4>What's Planned For Future Versions</h4>
+
+            <ul>
+                <li>Aesthetic improvements</li>
+                <li>UI enhancements</li>
+            </ul>
+
+            <p>
+                <em>
+                    You must have Java installed to run this program. If you don't have Java installed,
+                    <a target="_blank" href="http://www.java.com/">get it here.</a>
+                </em>
+            </p>
+        </div>
+        <div class="col-md-6 text-center">
+            <img class="img-responsive" src="{{ url_for("static", filename="images/text-analyzer/textanalyzer.png") }}" alt="Text Analyzer"/>
+
+            <p class="center red">
+                <a href="{{ url_for("static", filename="programs/textanalyzer.jar") }}">
+                    Download Text Analyzer 1.0 <span class="glyphicon glyphicon glyphicon-download"></span>
+                </a>
+            </p>
+        </div>
+    </div>
+{% endblock %}

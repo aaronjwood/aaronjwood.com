@@ -1,0 +1,62 @@
+{% extends "employer.html" %}
+{% from "employer.html" import language_icons, tool_icons %}
+{% set employer = "Verizon Labs" %}
+{% set description = "Summary of my work and accomplishments at %s." % employer %}
+{% set title = "Principal Software Engineer" %}
+{% set dates = "March 2015 – Present" %}
+{% set experiences = [
+"Contributor to Apache Mesos, Marathon, DC/OS, Redis, and more",
+"Design, develop, and successfully launch a new lightweight, self-healing, auto scaling private cloud infrastructure platform that efficiently uses 1,000,000+ CPUs, 3+ petabytes of RAM, and 100+ petabytes of storage",
+"Appointed team lead for application security and continuous integration",
+"Built a management console to coordinate platform resources, multi-tenancy, application lifecycles, and authentication",
+"Developed a self-healing cluster scaling service which auto-scales applications globally across the cluster and globally to specific node types based on data center configuration and metadata",
+"Created a distributed, self-healing firewall service to dynamically manage netfilter rules/chains across the cluster",
+"Developed a load balanced, distributed, self-healing middleman API service which intercepts calls to the logging/monitoring framework to provide a consistent, high performance, database-agnostic interface",
+"Worked on a custom deployment/upgrade framework that manages dependencies, provides rollback on failure, supports blue-green deployments, and ensures no downtime of services",
+"Wrote a tool to automate the setup, configuration, and deployment of the cluster in a local, virtualized environment. Used by all developers as an accurate testing environment"
+] %}
+{% set languages = [
+language_icons['Go'],
+language_icons['Gin'],
+language_icons['Python'],
+language_icons['Java'],
+language_icons['C++'],
+language_icons['C'],
+language_icons['Node.js'],
+language_icons['Express.js'],
+language_icons['JavaScript'],
+language_icons['AngularJS'],
+language_icons['Bootstrap'],
+language_icons['Flask'],
+language_icons['Bash'],
+"CQL"
+] %}
+{% set tools = [
+tool_icons['Mesos'],
+tool_icons['ZooKeeper'],
+tool_icons['Cassandra'],
+tool_icons['Kafka'],
+tool_icons['CoreOS'],
+tool_icons['PostgreSQL'],
+tool_icons['Supervisord'],
+tool_icons['Docker'],
+tool_icons['Fabric'],
+tool_icons['Apache'],
+tool_icons['NGINX'],
+tool_icons['Redis'],
+tool_icons['Storm'],
+tool_icons['Git'],
+tool_icons['Stash'],
+tool_icons['Confluence'],
+"Marathon",
+"Etcd2",
+"Fleet",
+"Chronos",
+"InfluxDB",
+"Elasticsearch",
+"Jenkins",
+"Bamboo",
+"Make",
+"HAProxy",
+"JIRA"
+] %}

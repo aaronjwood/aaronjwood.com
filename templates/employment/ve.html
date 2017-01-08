@@ -1,0 +1,35 @@
+{% extends "employer.html" %}
+{% from "employer.html" import language_icons, tool_icons %}
+{% set employer = "VE Industries" %}
+{% set description = "Summary of my work and accomplishments at %s." % employer %}
+{% set title = "Software Architect" %}
+{% set dates = "December 2012 - Present" %}
+{% set experiences = [
+"Developed a new customer management, tracking, and workflow system to automate business operations",
+"Rewrote the back-end of a large legacy application to interface with MySQL instead of Access",
+"Developed a new front-end to sit on top of the legacy application",
+"Designed a highly secure API with all data encrypted using AES-128",
+"Worked with clients to perform database migrations and performance analysis",
+"Performed vulnerability assessments and penetration tests",
+"Hardened public-facing production database and application servers"
+] %}
+{% set languages = [
+language_icons['Python'],
+language_icons['MySQL'],
+language_icons['Bash'],
+language_icons['PHP'],
+language_icons['CodeIgniter'],
+language_icons['JavaScript'],
+language_icons['jQuery']
+] %}
+{% set tools = [
+tool_icons['MySQL'],
+tool_icons['Microsoft SQL Server'],
+tool_icons['Windows Server'],
+tool_icons['CentOS'],
+tool_icons['Apache'],
+tool_icons['IIS'],
+tool_icons['Git'],
+tool_icons['GitLab'],
+tool_icons['GitLab CI']
+] %}

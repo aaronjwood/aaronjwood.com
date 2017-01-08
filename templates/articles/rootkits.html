@@ -1,0 +1,100 @@
+{% extends "layout.html" %}
+{%- block title -%}
+    Rootkits - Detection and Removal
+{%- endblock -%}
+{%- block description -%}
+    A quick analysis of rootkits, what they are, how they work, and how they can be removed with special tools.
+{%- endblock -%}
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-header text-center">
+                <h2>Rootkits - Detection and Removal</h2>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>What are rootkits?</h3>
+
+            <p>
+                Rootkits are primarily developed for persistent privileged access to a computer so that other malware
+                can remain stealthed and perform its job. They are usually used in conjunction with other types of
+                malware in order to augment its power and abilities (think of malware that "keeps coming back" after you
+                remove it or malware that you are unable to detect). That’s not to say that’s always the case, there are
+                many variants of rootkits that incorporate various things like network redirection, packet sniffing, key
+                logging, etc. along with their persistent privileged access. Because there are so many variants of
+                rootkits out there it’s difficult to say what their "normal" patterns are since they’re always changing.
+            </p>
+
+            <h3>How severe are rootkits compared to trojans, viruses, and worms?</h3>
+
+            <p>
+                Rootkits are the worst type of malware you can get. Especially when they incorporate uncommon additional
+                functionality. True rootkits can not be removed or even detected by most antivirus and antimalware
+                programs (in addition to programs like Norton, McAfee, and Avast this includes MalwareBytes, HijackThis,
+                Spybot, and other tools that aren’t classified as full antivirus software). This is because rootkits
+                will commonly modify parts of the operating system in order to intercept calls,
+                manipulate data that’s returned to programs, and change the way core functionality works.
+                Intercepting operating system calls and manipulating events and responses can be done by using something
+                called API/function hooking.
+            </p>
+
+            <h3>How am I supposed to remove rootkits if they can’t be detected?</h3>
+
+            <p>
+                There are special tools designed for this process. Even then these tools don’t detect "all" rootkits,
+                they look for common methods used by rootkits and if there’s a new variant of a popular rootkit that has
+                had the internals developed differently it's possible that it’s using entirely new methods due to new
+                security tools being available to users. Sometimes you’ll need to bring the system offline in order to
+                detect and remove rootkits. Rootkit detectors/removers use their own custom developed methods and
+                functions to scan the file system, look for network connections, look for alternate data streams,
+                enumerate the registry, and scan the memory. This is a difficult process since it involves using NONE of
+                the API’s that are provided by Windows to accomplish these tasks. This is what sets these tools apart
+                from other generic malware scanning tools.
+            </p>
+
+            <h3>Tools</h3>
+
+            <p>
+                <a href="http://www.gmer.net/" target="_blank">GMER</a> - This tool scans for many hidden objects and
+                looks for hooks. Interpreting the results and choosing what to do can be complicated because many items
+                it can return are perfectly normal and can be a part of Windows or other safe software
+            </p>
+
+            <p>
+                <a href="http://usa.kaspersky.com/downloads/tdsskiller" target="_blank">TDSSKiller</a> - This tool
+                targets the TDSS/TDL4/Alureon rootkit family which are extremely nasty and have many variants. It’s
+                extremely easy to use with the exception that it may find hooks or hidden objects that are completely
+                safe
+            </p>
+
+            <p>
+                <a href="http://www.sophos.com/en-us/products/free-tools/sophos-anti-rootkit.aspx" target="_blank">Sophos
+                    Anti-Rootkit</a> - A good tool for general rootkit detection. Interpret results with care (just like
+                the other tools listed)
+            </p>
+
+            <p>
+                <a href="http://www.malwarebytes.org/products/mbar/" target="_blank">Malwarebytes Anti-Rootkit</a> - A
+                popular tool that seems to be getting some good press and reviews. Currently in beta which can be risky
+                for tools like this
+            </p>
+
+            <p>
+                <a href="http://public.avast.com/~gmerek/aswMBR.htm" target="_blank">aswMBR</a> - A tool from Avast
+                targeting TDL4, Sinowal, Whistler, and others http://public.avast.com/~gmerek/aswMBR.htm
+            </p>
+
+            <p>
+                <a href="http://www.chkrootkit.org/" target="_blank">chkrootkit</a> - Checks for signs of a rootkit on
+                Linux systems
+            </p>
+
+            <p>
+                <a href="http://rkhunter.sourceforge.net/" target="_blank">rkhunter</a> - Another Linux tool that scans
+                for rootkits, backdoors, and potential local exploits
+            </p>
+        </div>
+    </div>
+{% endblock %}

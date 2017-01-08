@@ -1,0 +1,137 @@
+{% extends "layout.html" %}
+{%- block title -%}
+The NSA and SSL/TLS
+{%- endblock -%}
+{%- block description -%}
+    An in-depth overview of the SSL and TLS protocols, the encryption behind them, and what the NSA is and isn't able
+    to do with data encrypted by them.
+{%- endblock -%}
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-header text-center">
+                <h2>The NSA and SSL/TLS</h2>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>
+                There has been a lot of talk about the capabilities of the NSA and the technical expertise they have. Don't get
+                me wrong, they certainly know what they're doing and carry out highly sophisticated, complex attacks.
+                Their tools, methods, exploits, and execution are top notch. People everywhere seem to be generalizing this and
+                are saying things like "security is dead" or "NSA cracks SSL everywhere" which just isn't true. I'm sure that
+                there are many cases where they're able to break SSL in certain scenarios but to say that SSL is dead or that
+                they had the ability to finally break the protocol and any ciphers it can use underneath is just wrong. For the
+                remainder of this article I'm going to change my terminology a bit so that when I say SSL I mean SSL
+                literally and not TLS. When I say TLS I mean TLS literally and not SSL. SSL is old by today's standards
+                and TLS is its successor.
+            </p>
+
+            <p>
+                It is generally safe to now say that SSL is insecure (remember, this is not TLS!) Unless you need to support
+                really old clients/devices or have a very strange/unique situation you should not use SSL anymore. <a
+                target="_blank" href="https://www.pcicomplianceguide.org/pci-dss-v3-1-and-ssl-what-you-should-do-now/">In
+                fact, if you are using SSL 3.0 you are no longer PCI compliant!</a> This shouldn't really be surprising
+                because SSL was superseded by TLS in <strong>1999</strong>. So if you want to say that the NSA is able to break
+                SSL 3.0 connections then you're probably right in most cases since there is a much larger attack surface.
+                If the server in question is poorly configured, misconfigured, or if it's using SSL 2.0 you shouldn't
+                expect any security from it. SSL suffers from a bunch of known attacks, POODLE being one of the more well-known
+                ones.
+            </p>
+
+            <p>
+                Now that we have SSL out of the way let's talk about TLS and how the NSA is able to either get around or crack
+                the encryption itself. As I mentioned earlier, TLS is the successor to SSL and should be the only protocol used
+                going forward. TLS is widely supported, though the question of which version is most widely deployed is a bit
+                trickier to answer. If you said that the NSA can break any and all TLS connections then I'd say that it depends
+                and that most successful attacks on TLS are not directed at the encryption/protocol specifically.
+            </p>
+
+            <p>
+                For example, let's say that the NSA (or any other agency/group) installed malware on your machine. In this case
+                then yes, you might as well consider your traffic and/or anything else you do compromised. Now let's say that the
+                same malware was instead installed on a server that you're connecting to via TLS (or SSL). Any connection coming
+                in to that server should be considered insecure unless that server is configured specially (more on this later).
+                Even with special configuration, if the malware is designed to handle those cases then you're pretty much out of
+                luck.
+            </p>
+
+            <p>
+                Man-in-the-middle attacks are also a possibility and if you've got an agency as large, skilled, powerful, and
+                well-funded as the NSA then you can guarantee that they are intercepting traffic directly on the backbone of
+                networks. Additionally, it may be safe to assume that legitimate certificates either "come easily"
+                to agencies such as this or can be "acquired" in other ways. If you have a man-in-the-middle attack happening on
+                the backbone with legitimate certificates being used you can be sure that your "secure"
+                connection is really not so secure. Any and all of your data that's being encrypted over a TLS connection that
+                is being attacked in this way is completely decryptable by the party performing the attack. This is because the
+                key that is being used in the encryption/decryption process is theirs! Of course they'll be able to decrypt it.
+            </p>
+
+            <p>
+                Another method of sidestepping TLS (or SSL) is to acquire the key on the server that's used to encrypt/decrypt
+                the traffic. How would you acquire this key, you ask? Easy! If you have physical access to the server then just
+                access it directly. Considering the NSA has many advanced exploits that are able to target a wide variety of
+                platforms this becomes concerning. There is a way to mitigate this situation so that you don't have a single key
+                to be stolen by using something called forward secrecy. Forward secrecy (sometimes called perfect forward
+                secrecy) ensures that a unique key is used for encrypting/decrypting data for a single session. This means that
+                if the session key is compromised then it can only be used to decrypt data for the session in which it encrypted
+                data for. Pretty good, right? Here's the catch: the server in question usually needs to be configured for
+                forward secrecy so you're relying on the system administrators to properly setup the server for optimal
+                security. This applies to other cases that we'll talk about so you'll see that a lot of factors end up falling
+                on the system administrator to make sure that you're not connecting to a poorly or misconfigured server which
+                makes all the difference in the world.
+            </p>
+
+            <p>
+                There are of course more ways to indirectly attack TLS and SSL connections. Side-channel attacks are one example
+                of a more sophisticated attack that usually (not always) requires physical proximity to the machine. Preying on
+                weak random number generators that are used in the encryption process is another major attack vector. If you've
+                got a weak random number generator used on the client or server side and a third party is able to predict a
+                pattern from it then you should consider everything about the connection compromised.
+            </p>
+
+            <p>
+                So far we've talked about scenarios that give the NSA (or anyone really) the ability to intercept and decrypt
+                your traffic without breaking TLS, SSL, or any of the underlying ciphers. Now let's talk about situations where
+                your encrypted connection really can be broken. TLS and SSL support a wide range of cipher suites, many of them
+                very strong and perfectly usable for today's standards. If a server is not configured to use these strong cipher
+                suites however, you could be thinking that your connection is pretty fortified because it's using TLS but
+                underneath it's really using a cipher with very poor strength. This is a very bad thing of course and I'm not
+                sure how many servers out there are supporting or prioritizing weak ciphers. <a
+                target="_blank" href="https://www.trustworthyinternet.org/ssl-pulse/">SSL
+                Pulse might be a good source to check if you're curious.</a> It's also possible (but probably rare these
+                days) that the server may be generating very weak keys due to a bug in Debian that was introduced in 2006. This
+                bug was fixed in 2008 so you can see that it's fairly old now. You'd also have to be connecting to a server
+                that's actually running Debian.
+            </p>
+
+            <p>
+                If you're connecting to a server that's properly configured, patched, using forward secrecy, and is using or at
+                least prioritizing strong ciphers then you should feel pretty confident. At the time of this writing and in an
+                unrealistic world where support and usability is not an issue everything would be using TLS 1.2, HTTP Strict
+                Transport Security, AEAD cipher suites with SHA-2, 4096-bit keys, and elliptic curve or other very strong cipher
+                suites. Forward secrecy would be mandatory and deployed everywhere and there would be no systems still running
+                with the weak key bug. Even though this is unrealistic things have greatly improved over the years so you can
+                expect at least some of the above to apply for the majority of cases. If you look at servers from Google,
+                Facebook, Microsoft, Amazon, or any other large well-known companies with a strong talent pool and ample
+                resources you can be sure that they have their configuration setup well and will continue to do so. <a
+                target="_blank" href="https://www.ssllabs.com/ssltest/analyze.html?d=www.amazon.com&s=205.251.242.54">Just
+                look at how Amazon has set themselves up.</a>
+            </p>
+
+            <p>
+                Hopefully you now see the generalization of statements made about the NSA and maybe even technology itself.
+                These generalizations apply to many other statements about the NSA and technology in general. Sometimes things
+                really do go wrong but usually it's not as severe as it seems. For example, if TLS didn't exist and all we had
+                was SSL 3.0 then I would take back most things I've said in this article. The fact is that TLS has been around
+                for a long time! The adoption, understanding, and technical work around it is what seems to always need to play
+                catch-up. You're also greatly relying on professionals in the field to do the right thing or to not be
+                restricted by their employer to improve things even when nothing is going wrong (I've seen this happen often
+                which is depressing). Things are always a lot more complex under the hood than they look but you can always be
+                sure that there are many world class computer scientists, cryptographers, and mathematicians working on these
+                incredibly complicated, large scale problems.
+            </p>
+        </div>
+    </div>
+{% endblock %}
