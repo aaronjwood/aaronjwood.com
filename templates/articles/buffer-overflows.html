@@ -24,7 +24,7 @@
                 <script src="https://gist.github.com/aaronjwood/22c17b0bf6f271f38cf0db043d814abd.js"></script>
             </div>
             <p>
-                For x86, all we need to do is input 16 bytes to make auth point to an address other than 0x0.
+                For x86, all we need to do is input 16 bytes to make the address of auth point to a value other than 0x0.
                 x86-64 is a different story (more bytes are needed) but is still just as exploitable.
                 There's another flaw with this code that makes it even easier to exploit.
                 The conditional that checks the auth variable is not checking for a specific value, only if the value is truthy.
