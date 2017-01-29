@@ -16,6 +16,10 @@ body {
     margin-bottom: 35px;
 }
 
+.wrapped-image {
+    margin-right: 10px;
+}
+
 .footer {
     position: absolute;
     bottom: 0;
