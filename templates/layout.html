@@ -10,22 +10,23 @@
     <title>{% block title %}{% endblock %} :: Aaron J Wood</title>
     <link rel="shortcut icon" href="{{ url_for("static", filename="images/favicon.ico") }}">
     <link rel="stylesheet" href="{{ url_for("static", filename="node_modules/bootswatch/yeti/bootstrap.min.css") }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename="css/main.css") }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename="css/main.css") }}?v={{ css_version }}">
     <script defer type="text/javascript"
             src="{{ url_for("static", filename="node_modules/jquery/dist/jquery.min.js") }}"></script>
     <script defer type="text/javascript"
             src="{{ url_for("static", filename="node_modules/bootstrap/dist/js/bootstrap.min.js") }}"></script>
     <script defer type="text/javascript"
             src="{{ url_for("static", filename="node_modules/javascript-biginteger/biginteger.min.js") }}"></script>
-    <script defer type="text/javascript" src="{{ url_for("static", filename="js/main.js") }}"></script>
+    <script defer type="text/javascript"
+            src="{{ url_for("static", filename="js/main.js") }}?v={{ js_version }}"></script>
     <script>
         (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r;
             i[r] = i[r] || function () {
-                        (i[r].q = i[r].q || []).push(arguments)
-                    }, i[r].l = 1 * new Date();
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
             a = s.createElement(o),
-                    m = s.getElementsByTagName(o)[0];
+                m = s.getElementsByTagName(o)[0];
             a.async = 1;
             a.src = g;
             m.parentNode.insertBefore(a, m)
@@ -206,7 +207,8 @@
                         <li>
                             <a href="https://stackoverflow.com/cv/aaronjwood" target="_blank">
                                 <img alt="Stack Overflow CV"
-                                     src="{{ url_for("static", filename="images/icons/careers.png") }}"/> Stack Overflow CV
+                                     src="{{ url_for("static", filename="images/icons/careers.png") }}"/> Stack Overflow
+                                CV
                             </a>
                         </li>
                         <li>
