@@ -2,7 +2,6 @@ import binascii
 import collections
 import hashlib
 import os
-import urllib
 import zlib
 from urllib.error import HTTPError
 from urllib.request import urlopen
