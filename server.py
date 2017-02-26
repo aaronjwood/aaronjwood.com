@@ -2,8 +2,9 @@ import binascii
 import collections
 import hashlib
 import os
-import urllib2
+import urllib
 import zlib
+from urllib import request, error
 from xml.etree import ElementTree
 
 import passlib.hash
@@ -21,7 +22,7 @@ def inject_versions():
         "js_version": base_path + "/js/main.js"
     }
 
-    for key, value in files.iteritems():
+    for key, value in files.items():
         with open(value, "rb") as f:
             files[key] = hashlib.md5(f.read()).hexdigest()
 
@@ -37,7 +38,7 @@ def index():
 def dev_activity():
     html = ""
     try:
-        data = urllib2.urlopen("https://github.com/aaronjwood.atom").read()
+        data = urllib.request.urlopen("https://github.com/aaronjwood.atom").read()
         tree = ElementTree.fromstring(data)
         children = tree.findall("{http://www.w3.org/2005/Atom}entry")
         for i in range(len(children)):
@@ -49,7 +50,7 @@ def dev_activity():
             content = content.replace('href="aaronjwood', 'href="https://github.com/aaronjwood')
             content = content.replace('href="/', 'href="https://github.com/')
             html += content
-    except urllib2.HTTPError:
+    except urllib.error.HTTPError:
         html = "Problem reaching GitHub...is it down?"
 
     res = make_response(html)
@@ -78,12 +79,12 @@ def do_hash():
 
     for type in hashlib.algorithms_available:
         hash = hashlib.new(type)
-        hash.update(text)
+        hash.update(text.encode())
         hashes[type.upper()] = hash.hexdigest()
 
-    hashes["CRC32"] = "%08X".lower() % (binascii.crc32(text) & 0xffffffff)
+    hashes["CRC32"] = "%08X".lower() % (binascii.crc32(text.encode()) & 0xffffffff)
     hashes["MD4"] = passlib.hash.hex_md4.encrypt(text)
-    hashes["ADLER32"] = format(zlib.adler32(text) & 0xffffffff, "x")
+    hashes["ADLER32"] = format(zlib.adler32(text.encode()) & 0xffffffff, "x")
     hashes["CISCO PIX"] = passlib.hash.cisco_pix.encrypt(text)
     hashes["MYSQL 3.2.3"] = passlib.hash.mysql323.encrypt(text)
     hashes["MYSQL 4.1"] = passlib.hash.mysql41.encrypt(text)
