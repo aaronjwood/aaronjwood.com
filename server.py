@@ -80,7 +80,12 @@ def do_hash():
     for type in hashlib.algorithms_available:
         hash = hashlib.new(type)
         hash.update(text.encode())
-        hashes[type.upper()] = hash.hexdigest()
+        if type == "shake_128":
+            hashes[type.upper()] = hash.hexdigest(256)
+        elif type == "shake_256":
+            hashes[type.upper()] = hash.hexdigest(512)
+        else:
+            hashes[type.upper()] = hash.hexdigest()
 
     hashes["CRC32"] = "%08X".lower() % (binascii.crc32(text.encode()) & 0xffffffff)
     hashes["MD4"] = passlib.hash.hex_md4.encrypt(text)
