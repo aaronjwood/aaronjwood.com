@@ -4,7 +4,8 @@ import hashlib
 import os
 import urllib
 import zlib
-from urllib import request, error
+from urllib.error import HTTPError
+from urllib.request import urlopen
 from xml.etree import ElementTree
 
 import passlib.hash
@@ -38,7 +39,7 @@ def index():
 def dev_activity():
     html = ""
     try:
-        data = urllib.request.urlopen("https://github.com/aaronjwood.atom").read()
+        data = urlopen("https://github.com/aaronjwood.atom").read()
         tree = ElementTree.fromstring(data)
         children = tree.findall("{http://www.w3.org/2005/Atom}entry")
         for i in range(len(children)):
@@ -50,7 +51,7 @@ def dev_activity():
             content = content.replace('href="aaronjwood', 'href="https://github.com/aaronjwood')
             content = content.replace('href="/', 'href="https://github.com/')
             html += content
-    except urllib.error.HTTPError:
+    except HTTPError:
         html = "Problem reaching GitHub...is it down?"
 
     res = make_response(html)
