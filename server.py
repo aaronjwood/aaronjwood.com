@@ -74,9 +74,6 @@ def do_hash():
     text = request.form["key"]
     hashes = collections.OrderedDict()
 
-    hashes["NTLM"] = passlib.hash.nthash.encrypt(text)
-    hashes["LM"] = passlib.hash.lmhash.encrypt(text)
-
     for type in hashlib.algorithms_available:
         hash = hashlib.new(type)
         hash.update(text.encode())
@@ -87,6 +84,8 @@ def do_hash():
         else:
             hashes[type.upper()] = hash.hexdigest()
 
+    hashes["NTLM"] = passlib.hash.nthash.encrypt(text)
+    hashes["LM"] = passlib.hash.lmhash.encrypt(text)
     hashes["CRC32"] = "%08X".lower() % (binascii.crc32(text.encode()) & 0xffffffff)
     hashes["MD4"] = passlib.hash.hex_md4.encrypt(text)
     hashes["ADLER32"] = format(zlib.adler32(text.encode()) & 0xffffffff, "x")
