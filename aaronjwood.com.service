@@ -1,0 +1,13 @@
+[Unit]
+Description=aaronjwood.com
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+ExecStart=/usr/bin/docker run --net containers --ip 172.18.0.2 --name aaronjwood.com asu64:5000/aaronjwood.com
+ExecStop=/usr/bin/docker stop aaronjwood.com
+ExecStopPost=/usr/bin/docker rm aaronjwood.com
+
+[Install]
+WantedBy=multi-user.target
