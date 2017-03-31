@@ -1,0 +1,13 @@
+[Unit]
+Description=Nginx
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+ExecStart=/usr/bin/docker run --name nginx --net containers --ip 172.18.0.4 -p 80:80 -p 443:443 -v /home/aaron/nginx.conf:/etc/nginx/nginx.conf:ro -v /home/aaron/ssl:/etc/nginx/ssl:ro nginx:mainline-alpine
+ExecStop=/usr/bin/docker stop nginx
+ExecStopPost=/usr/bin/docker rm nginx
+
+[Install]
+WantedBy=multi-user.target
