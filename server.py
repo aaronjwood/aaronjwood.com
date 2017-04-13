@@ -89,7 +89,8 @@ def do_hash():
     hashes["CRC32"] = "%08X".lower() % (binascii.crc32(text.encode()) & 0xffffffff)
     hashes["MD4"] = passlib.hash.hex_md4.encrypt(text)
     hashes["ADLER32"] = format(zlib.adler32(text.encode()) & 0xffffffff, "x")
-    hashes["CISCO PIX"] = passlib.hash.cisco_pix.encrypt(text)
+    if len(text) <= 16:
+        hashes["CISCO PIX"] = passlib.hash.cisco_pix.encrypt(text)
     hashes["MYSQL 3.2.3"] = passlib.hash.mysql323.encrypt(text)
     hashes["MYSQL 4.1"] = passlib.hash.mysql41.encrypt(text)
     hashes["LDAP MD5"] = passlib.hash.ldap_md5.encrypt(text)
