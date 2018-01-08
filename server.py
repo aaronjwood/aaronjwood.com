@@ -3,15 +3,28 @@ import collections
 import hashlib
 import os
 import zlib
+from functools import wraps
 from urllib.error import HTTPError
 from urllib.request import urlopen
 from xml.etree import ElementTree
 
 import passlib.hash
-from flask import Flask
-from flask import render_template, request, jsonify, make_response
+from flask import Flask, render_template, request, jsonify, make_response, abort
+from jinja2 import TemplateNotFound
 
 app = Flask(__name__)
+
+
+def template_check(route):
+    @wraps(route)
+    def wrapper(**kwargs):
+        try:
+            for key, value in kwargs.items():
+                return route(value)
+        except TemplateNotFound:
+            return abort(404)
+
+    return wrapper
 
 
 @app.context_processor
@@ -60,13 +73,18 @@ def dev_activity():
 
 
 @app.route("/tools/<tool>/")
+@template_check
 def tools(tool):
     return render_template("tools/%s.html" % tool)
 
 
 @app.route("/employment/<employer>/")
+@template_check
 def employment(employer):
-    return render_template("employment/%s.html" % employer)
+    try:
+        return render_template("employment/%s.html" % employer)
+    except TemplateNotFound:
+        abort(404)
 
 
 @app.route("/tools/hash/dohash", methods=["POST"])
@@ -100,6 +118,7 @@ def do_hash():
 
 
 @app.route("/articles/<article>/")
+@template_check
 def articles(article):
     return render_template("articles/%s.html" % article)
 
