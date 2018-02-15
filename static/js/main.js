@@ -1,17 +1,19 @@
 $(function () {
 
     //Fetch github data
-    $.get("/dev-activity/", function (data) {
-        $("#loader").remove();
-        $("#development-activity").html(data);
-    });
+    if (window.location.pathname === "/") {
+        $.get("/dev-activity/", function (data) {
+            $("#loader").remove();
+            $("#development-activity").html(data);
+        });
+    }
 
     //Hash generator
     $("#hash-text").on("keyup", function (event) {
         if (event.which != '13') {
             $.post("dohash", {key: $(this).val()}, function (hash) {
                 var data = "";
-                $.each(hash, function(k, v) {
+                $.each(hash, function (k, v) {
                     data += $("<tr>").append(
                         $("<td>").text(k),
                         $("<td>").text(v)
