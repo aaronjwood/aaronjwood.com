@@ -4,8 +4,8 @@ import hashlib
 import os
 import zlib
 from functools import wraps
-from urllib.error import HTTPError
-from urllib.request import urlopen
+from urllib2 import HTTPError
+from urllib2 import urlopen
 from xml.etree import ElementTree
 
 import passlib.hash
