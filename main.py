@@ -43,7 +43,7 @@ def inject_versions():
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("index.html.jinja")
 
 
 @app.route("/dev-activity/")
@@ -74,14 +74,14 @@ def dev_activity():
 @app.route("/tools/<tool>/")
 @template_check
 def tools(tool):
-    return render_template("tools/%s.html" % tool)
+    return render_template("tools/%s.html.jinja" % tool)
 
 
 @app.route("/employment/<employer>/")
 @template_check
 def employment(employer):
     try:
-        return render_template("employment/%s.html" % employer)
+        return render_template("employment/%s.html.jinja" % employer)
     except TemplateNotFound:
         abort(404)
 
@@ -119,7 +119,7 @@ def do_hash():
 @app.route("/articles/<article>/")
 @template_check
 def articles(article):
-    return render_template("articles/%s.html" % article)
+    return render_template("articles/%s.html.jinja" % article)
 
 
 if __name__ == "__main__":
