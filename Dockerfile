@@ -1,12 +1,16 @@
-FROM python:3-alpine
+FROM pypy:3-slim-stretch
 
-COPY . /srv/aaronjwood.com
+RUN apt-get update && apt-get install -y curl
+RUN curl -sL https://deb.nodesource.com/setup_13.x | bash -
+RUN apt-get update && apt-get install -y npm
 
-RUN apk update && apk add build-base nodejs && \
-    pip install -r /srv/aaronjwood.com/requirements.txt && \
-    cd /srv/aaronjwood.com/static && npm install && \
-    apk del build-base nodejs
+WORKDIR /srv/aaronjwood.com
+
+COPY . .
+
+RUN pip install -r requirements.txt
+RUN cd static && npm i && cd -
 
 ENV MODE RELEASE
 
-ENTRYPOINT python /srv/aaronjwood.com/main.py
+CMD ["pypy3", "main.py"]

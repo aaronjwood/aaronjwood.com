@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "bootstrap": "^3.4.1",
+    "biginteger": "^1.0.3",
+    "bootswatch": "^3.4.1",
+    "jquery": "^3.4.1"
+  }
+}
