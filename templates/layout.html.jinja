@@ -10,7 +10,7 @@
     <title>{% block title %}{% endblock %} :: Aaron J Wood</title>
     <link rel="shortcut icon" href="{{ url_for("static", filename="images/favicon.ico") }}">
     <link rel="stylesheet" href="{{ url_for("static", filename="node_modules/bootswatch/yeti/bootstrap.min.css") }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename="css/main.css") }}?v={{ css_version }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename="css/main.css") }}">
     <script defer type="text/javascript"
             src="{{ url_for("static", filename="node_modules/jquery/dist/jquery.min.js") }}"></script>
     <script defer type="text/javascript"
@@ -18,7 +18,7 @@
     <script defer type="text/javascript"
             src="{{ url_for("static", filename="node_modules/biginteger/biginteger.js") }}"></script>
     <script defer type="text/javascript"
-            src="{{ url_for("static", filename="js/main.js") }}?v={{ js_version }}"></script>
+            src="{{ url_for("static", filename="js/main.js") }}"></script>
     <script>
         (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r;

@@ -26,21 +26,6 @@ def template_check(route):
     return wrapper
 
 
-@app.context_processor
-def inject_versions():
-    base_path = os.path.dirname(os.path.abspath(__file__)) + "/static"
-    files = {
-        "css_version": base_path + "/css/main.css",
-        "js_version": base_path + "/js/main.js"
-    }
-
-    for key, value in files.items():
-        with open(value, "rb") as f:
-            files[key] = hashlib.md5(f.read()).hexdigest()
-
-    return files
-
-
 @app.route("/")
 def index():
     return render_template("index.html.jinja")
