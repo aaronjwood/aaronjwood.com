@@ -13,4 +13,6 @@ RUN cd static && npm i && cd -
 
 ENV MODE RELEASE
 
+STOPSIGNAL SIGINT
+
 CMD ["pypy3", "main.py"]
