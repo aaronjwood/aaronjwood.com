@@ -45,3 +45,7 @@ body {
 #hex-values {
     word-wrap: break-word;
 }
+
+#development-activity code {
+    background-color: inherit;
+}
