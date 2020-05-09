@@ -1,5 +1,4 @@
 import binascii
-import collections
 import hashlib
 import os
 import zlib
