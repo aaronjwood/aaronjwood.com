@@ -38,11 +38,11 @@ def dev_activity():
         data = urlopen("https://github.com/aaronjwood.atom").read()
         tree = ElementTree.fromstring(data)
         children = tree.findall("{http://www.w3.org/2005/Atom}entry")
-        for i in range(len(children)):
-            if i == 5:
+        for i, child in enumerate(children):
+            if i == 10:
                 break
 
-            content = children[i].find("{http://www.w3.org/2005/Atom}content").text
+            content = child.find("{http://www.w3.org/2005/Atom}content").text
             content = content.replace("https://github.com", "")
             content = content.replace('href="aaronjwood', 'href="https://github.com/aaronjwood')
             content = content.replace('href="/', 'href="https://github.com/')

@@ -16,6 +16,10 @@ body {
     margin-bottom: 35px;
 }
 
+.navbar {
+    border-radius: unset;
+}
+
 .wrapped-image {
     margin-right: 10px;
 }
@@ -46,6 +50,10 @@ body {
     word-wrap: break-word;
 }
 
-#development-activity code {
-    background-color: inherit;
+#development-activity ul {
+    list-style-type: none;
+}
+
+#development-activity li>code {
+    background-color: unset;
 }
