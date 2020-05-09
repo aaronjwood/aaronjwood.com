@@ -76,15 +76,15 @@ def do_hash():
     text = request.form["key"]
     hashes = collections.OrderedDict()
 
-    for type in hashlib.algorithms_available:
-        hash = hashlib.new(type)
+    for algo in hashlib.algorithms_available:
+        hash = hashlib.new(algo)
         hash.update(text.encode())
-        if type == "shake_128":
-            hashes[type.upper()] = hash.hexdigest(256)
-        elif type == "shake_256":
-            hashes[type.upper()] = hash.hexdigest(512)
+        if algo == "shake_128":
+            hashes[algo.upper()] = hash.hexdigest(256)
+        elif algo == "shake_256":
+            hashes[algo.upper()] = hash.hexdigest(512)
         else:
-            hashes[type.upper()] = hash.hexdigest()
+            hashes[algo.upper()] = hash.hexdigest()
 
     hashes["NTLM"] = passlib.hash.nthash.encrypt(text)
     hashes["LM"] = passlib.hash.lmhash.encrypt(text)
