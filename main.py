@@ -74,17 +74,17 @@ def employment(employer):
 @app.route("/tools/hash/dohash", methods=["POST"])
 def do_hash():
     text = request.form["key"]
-    hashes = collections.OrderedDict()
+    hashes = {}
 
     for algo in hashlib.algorithms_available:
-        hash = hashlib.new(algo)
-        hash.update(text.encode())
+        hasher = hashlib.new(algo)
+        hasher.update(text.encode())
         if algo == "shake_128":
-            hashes[algo.upper()] = hash.hexdigest(256)
+            hashes[algo.upper()] = hasher.hexdigest(256)
         elif algo == "shake_256":
-            hashes[algo.upper()] = hash.hexdigest(512)
+            hashes[algo.upper()] = hasher.hexdigest(512)
         else:
-            hashes[algo.upper()] = hash.hexdigest()
+            hashes[algo.upper()] = hasher.hexdigest()
 
     hashes["NTLM"] = passlib.hash.nthash.encrypt(text)
     hashes["LM"] = passlib.hash.lmhash.encrypt(text)
@@ -93,6 +93,7 @@ def do_hash():
     hashes["ADLER32"] = format(zlib.adler32(text.encode()) & 0xffffffff, "x")
     if len(text) <= 16:
         hashes["CISCO PIX"] = passlib.hash.cisco_pix.encrypt(text)
+
     hashes["MYSQL 3.2.3"] = passlib.hash.mysql323.encrypt(text)
     hashes["MYSQL 4.1"] = passlib.hash.mysql41.encrypt(text)
     hashes["LDAP MD5"] = passlib.hash.ldap_md5.encrypt(text)
