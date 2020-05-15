@@ -53,3 +53,7 @@ body {
 #development-activity ul {
     list-style-type: none;
 }
+
+#development-activity ul li code a {
+    color: inherit;
+}
