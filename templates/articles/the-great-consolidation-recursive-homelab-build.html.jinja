@@ -16,12 +16,12 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <h3>The Beginning - A Server Was Born</h3>
+            <h3>The Beginning - A Server Is Born</h3>
             <p>
-                In 2016 I decided to build myself a server that would be used for my home network. First it was only a NAS. I experimented with
+                In 2016 I decided to build a server that I could use for my home network. First it was only a NAS. I experimented with
                 <a href="https://www.freenas.org/">FreeNAS</a> for a while but found the hardware support from the kernel to be abysmal. To be fair,
                 I was running with a pretty "budget" CPU and chipset: an AMD 7890K APU utilizing the old FM2+ socket. If you're not familiar with
-                AMD's pre-Zen era know that it was pretty terrible. I had always planned to use ZFS from the beginning so I made sure to pump this
+                AMD's pre-Zen era, know that it was pretty terrible. I had always planned to use ZFS from the beginning so I made sure to pump this
                 thing with 32 GB of (slow) DDR3.
                 <br />
                 <img src="/static/images/apu.jpg" />
@@ -36,7 +36,7 @@
                 <br />
                 <img src="/static/images/bad-ram.jpg" />
                 <br />
-                After a small delay of RMA'ing one of the 2x8GB kits I got I was back in business.
+                After a small delay of RMA'ing one of the 2x8GB kits I was back in business.
             </p>
             <h3>The Move To Linux</h3>
             <p>
@@ -46,10 +46,8 @@
                 to be able to use containers. I had been using FreeBSD jails up until this point which worked very well.
             </p>
             <p>
-                After some careful planning I moved the server over to Ubuntu and switched to ZoL (ZFS on Linux). This was also the point where I started focusing
-                on getting an awesome monitoring setup in place. That's another huge project that has grown and changed over the years so I will leave that for
-                another article. I started containerizing a few workloads that I had and set each one up to be managed through systemd. It looked something like
-                this:
+                After some careful planning I moved the server over to Ubuntu and switched to ZoL (ZFS on Linux). I started containerizing a few workloads
+                that I had and set each one up to be managed through systemd. It looked something like this:
                 <br />
                 <script src="https://gist.github.com/aaronjwood/735ceae49afdf4e5ca1fabaa31acf54f.js"></script>
             </p>
@@ -93,12 +91,12 @@
             <h3>Another Small Annoyance</h3>
             <p>
                 After a while I realized that I never set myself up for IPv6. I went back to the drawing board for configuring netfilter and dnsmasq and thought
-                it'd be relatively simple to get it working. It ended up being a much bigger pain than I anticipated for a few reasons. First, I was pretty new
+                it'd be relatively simple to get it working. It ended up being a much bigger pain than I anticipated for a few reasons. Firstly, I was pretty new
                 to IPv6 and needed some time to understand the differences. Hint: it's not nearly as straightforward as it seems and there are a lot of things
                 that you need to take into account when setting it up. Second, it took me a while to get the netfilter config perfect as I initially blocked
-                too much and ended up breaking my any DHCPv6 queries from my ISP. Second, I needed to learn about prefix delegation and setup my DHCP server in
+                too much and ended up breaking my any DHCPv6 queries from my ISP. Secondly, I needed to learn about prefix delegation and setup my DHCP server in
                 a very specific way to request a very specific prefix from my ISP using certain settings. Without this being perfect I wasn't able to get an IPv6
-                address from my ISP. This took me hours and hours to understand and get right. Third, since there is no NAT with IPv6 I was very worried about
+                address from my ISP. This took me hours and hours to understand and get right. Thirdly, since there is no NAT with IPv6 I was very worried about
                 getting my netfilter rules correct. Initially it was not clear to me if I was blocking enough from the WAN or if I was blocking too much that may
                 end up breaking other things. Finally, after many hours and late nights I got it all setup and working:
                 <br />
@@ -162,7 +160,7 @@
                 to spare. The only challenge was figuring out what to do with all of my spinning disks where ZFS was taking care of all the important stuff. This is where things
                 started to get <em>really</em> <strong>fun.</strong>
             </p>
-            <h3>Turning My Upgraded Workstation Into...Everything</h3>
+            <h3>Turning My Upgraded Workstation Into... Everything</h3>
             <p>
                 I've always used Windows on my workstation, mostly for gaming. This was a problem as there was no way I was moving away from ZFS or Linux. I had two options here:
                 run Linux as the host (and a type 1 hypervisor) and passthrough my GPU to a Windows guest, or run Windows as the host and turn all of my Linux stuff into VMs via Hyper-V.
@@ -176,7 +174,7 @@
             <p>
                 I thought I'd be able to stick with Windows 10 Pro but I quickly found out that it does not support
                 <a href="https://docs.microsoft.com/en-us/windows-server/virtualization/hyper-v/plan/plan-for-deploying-devices-using-discrete-device-assignment">discreet device assignment (DDA).</a>
-                This is obviously a deal breaker since DDA is required to pass through PCIe devices. I found no way of installing Windows 10 as a type 1 hypervisor, enabling Hyper-V in Windows 10
+                This is a deal breaker since DDA is required to pass through PCIe devices. I found no way of installing Windows 10 as a type 1 hypervisor, enabling Hyper-V in Windows 10
                 seemed to operate as a standard type 2 hypervisor. Now what?
             </p>
             <h3>Change Of Plans</h3>
@@ -188,11 +186,10 @@
             </p>
             <h3>The First VM</h3>
             <p>
-                The very first thing I needed to migrate was my gateway. This is where things started to get <del>interesting</del> recursive. Setting up the Linux VM was straightforward,
-                but how was I going to get this thing to control my entire network? I decided to forgo using virtualized NICs with
-                <a href="https://en.wikipedia.org/wiki/Single-root_input/output_virtualization">SRV-IO</a> and just pass the entire NIC in directly. I had no plans for the host to use this NIC and,
-                to be honest, I didn't want the host to even see this NIC. The less access the host has to the NIC the better, even if that meant ditching virtualizing it. Passing through the NIC was
-                incredibly easy:
+                The very first thing I needed to migrate was my gateway. Setting up the Linux VM was straightforward, but how was I going to get this thing to control my entire network?
+                I decided to forgo using virtualized NICs with <a href="https://en.wikipedia.org/wiki/Single-root_input/output_virtualization">SRV-IO</a> and just pass the entire NIC
+                in directly. I had no plans for the host to use this NIC and, to be honest, I didn't want the host to even see this NIC. The less access the host has to the NIC the better,
+                even if that meant ditching virtualizing it. Passing through the NIC was incredibly easy:
                 <script src="https://gist.github.com/aaronjwood/7881f9c9af2237ba306b1cf03ed13159.js"></script>
                 <br />
                 Now my host didn't need a network cable anymore. Previous it was connected to this same NIC when the NIC was in my now-retired server. All that was needed was to create an internal
@@ -229,7 +226,7 @@
                 Before throwing the HBA into my workstation I wanted to make sure the firmware was up to date as it came with an extremely old version. As I was updating the firmware
                 failed halfway through. This can be fatal on other devices but thankfully HBAs seem to be pretty hard to brick. The problem was that I used generic firmware from Broadcom
                 to do the initial upgrade. I didn't realize that this wouldn't work and would cause a failure when writing out one of the blocks to the card. Now the only problem was
-                finding the specific Dell-provided firmware. I couldn't find it <strong><em>anywhere,</em></strong> and I had searched for hours and hours. Finally around 4am I found out
+                finding the specific Dell-provided firmware. I couldn't find it anywhere, and I had searched for hours and hours. Finally around 4am I found out
                 that the firmware I needed was buried inside one of Dell's .exe files that you can get to try and flash the card from within Windows. After extracting the firmware out of
                 the .exe I was finally able to update the card successfully:
                 <br />
@@ -262,7 +259,7 @@
                 </ul>
                 What's really cool about having this kind of setup is that I can back the host up to itself...but it's really not itself. A nightly Windows Server backup job will backup
                 my entire host to a block device that's attached via iSCSI. This block device is backed by a zvol that's part of my zpool so the data is really not on the host machine at all.
-                There are a few other similar workflows that I have like this which lets me take advantage of all the benefits and protection that ZFS gives me. Another cool thing is that my
+                There are a few other similar workflows that I have like this which let me take advantage of all the benefits and protection ZFS provides. Another cool thing is that my
                 workstation is now also my gateway...but, again, it's really not. Windows has no idea that there's a 4 port NIC here, or that there's an HBA card being used to handle all the
                 storage behind my Samba shares or my block devices exposed to Windows. Everything is really being handled by Linux along with the hardware I've passed through which is exactly
                 what I wanted from the very beginning.
