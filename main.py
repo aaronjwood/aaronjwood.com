@@ -38,7 +38,7 @@ def dev_activity():
         tree = ElementTree.fromstring(data)
         children = tree.findall("{http://www.w3.org/2005/Atom}entry")
         for i, child in enumerate(children):
-            if i == 7:
+            if i == 10:
                 break
 
             content = child.find("{http://www.w3.org/2005/Atom}content").text
