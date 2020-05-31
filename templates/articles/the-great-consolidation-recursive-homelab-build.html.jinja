@@ -91,12 +91,12 @@
             <h3>Another Small Annoyance</h3>
             <p>
                 After a while I realized that I never set myself up for IPv6. I went back to the drawing board for configuring netfilter and dnsmasq and thought
-                it'd be relatively simple to get it working. It ended up being a much bigger pain than I anticipated for a few reasons. Firstly, I was pretty new
+                it'd be relatively simple to get it working. It ended up being a much bigger pain than I anticipated for a few reasons. Fist, I was pretty new
                 to IPv6 and needed some time to understand the differences. Hint: it's not nearly as straightforward as it seems and there are a lot of things
                 that you need to take into account when setting it up. Second, it took me a while to get the netfilter config perfect as I initially blocked
-                too much and ended up breaking my any DHCPv6 queries from my ISP. Secondly, I needed to learn about prefix delegation and setup my DHCP server in
+                too much and ended up breaking my any DHCPv6 queries from my ISP. Third, I needed to learn about prefix delegation and setup my DHCP server in
                 a very specific way to request a very specific prefix from my ISP using certain settings. Without this being perfect I wasn't able to get an IPv6
-                address from my ISP. This took me hours and hours to understand and get right. Thirdly, since there is no NAT with IPv6 I was very worried about
+                address from my ISP. This took me hours and hours to understand and get right. Fourth, since there is no NAT with IPv6 I was very worried about
                 getting my netfilter rules correct. Initially it was not clear to me if I was blocking enough from the WAN or if I was blocking too much that may
                 end up breaking other things. Finally, after many hours and late nights I got it all setup and working:
                 <br />
