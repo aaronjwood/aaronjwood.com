@@ -53,3 +53,7 @@ body {
 #development-activity ul {
     list-style-type: none;
 }
+
+code {
+    background-color: unset;
+}
