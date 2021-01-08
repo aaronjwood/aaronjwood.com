@@ -1,6 +1,6 @@
 $(function () {
 
-    //Fetch github data
+    // Fetch github data.
     if (window.location.pathname === "/") {
         $.get("/dev-activity/", function (data) {
             $("#loader").remove();
@@ -8,10 +8,18 @@ $(function () {
         });
     }
 
-    //Hash generator
+    // Hash generator.
+    var hashCache = {};
+    var hashTable = $("#hash-table");
     $("#hash-text").on("keyup", function (event) {
+        var key = $(this).val();
         if (event.which != '13') {
-            $.post("dohash", {key: $(this).val()}, function (hash) {
+            if (hashCache[key] !== undefined) {
+                hashTable.html(hashCache[key]);
+                return;
+            }
+
+            $.post("dohash", {key}, function (hash) {
                 var data = "";
                 $.each(hash, function (k, v) {
                     data += $("<tr>").append(
@@ -19,14 +27,14 @@ $(function () {
                         $("<td>").text(v)
                     )[0].outerHTML;
                 });
-                $("#hash-table").html(data);
+                hashTable.html(data);
+                hashCache[key] = data;
             });
         }
     });
 
+    // Hex generator.
     var hexText = $("#hex-text")
-
-    //Hex generator
     $(".hex-type").on("change", function () {
         hexText.trigger("keyup");
     });
@@ -37,29 +45,31 @@ $(function () {
             hexText.val(hexText.val().replace(/[^0-9]/gi, ""));
             var number = BigInteger.parse(hexText.val().replace(/[A-Za-z]/gi, ""));
             hexValues.text(number.toString(16));
+            return;
         }
-        else {
-            var hex = "";
-            for (var i = 0; i < hexText.val().length; i++) {
-                hex = hex + hexText.val().charCodeAt(i).toString(16);
-            }
-            hexValues.text(hex);
+
+        var hex = "";
+        for (var i = 0; i < hexText.val().length; i++) {
+            hex = hex + hexText.val().charCodeAt(i).toString(16);
         }
+
+        hexValues.text(hex);
     });
 
-    //Character counter
+    // Character counter.
+    var numCharacters = $("#num-characters");
     $("#character-box").on("keyup", function () {
-        $("#num-characters").html($(this).val().length);
+        numCharacters.html($(this).val().length);
     });
 
-    //Format number with commas
+    // Format number with commas.
     function numberWithCommas(x) {
         var parts = x.toString().split(".");
         parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         return parts.join(".");
     }
 
-    //Calculate the time necessary to crack a password
+    // Calculate the time necessary to crack a password.
     function timeToCrack(combinations, guessesPerSecond) {
         var HOUR = 60;
         var DAY = 1440;
@@ -75,22 +85,28 @@ $(function () {
         if (time.isZero()) {
             return "Less than 1 second!";
         }
-        else if (time < HOUR) {
+
+        if (time < HOUR) {
             return BigInteger.toString(time) + " minutes";
         }
-        else if (time > HOUR && time < DAY) {
+
+        if (time > HOUR && time < DAY) {
             return BigInteger.toString(time.divide(HOUR)) + " hours";
         }
-        else if (time > DAY && time < WEEK) {
+
+        if (time > DAY && time < WEEK) {
             return BigInteger.toString(time.divide(DAY)) + " days";
         }
-        else if (time > WEEK && time < MONTH) {
+
+        if (time > WEEK && time < MONTH) {
             return BigInteger.toString(time.divide(WEEK)) + " weeks";
         }
-        else if (time > MONTH && time < YEAR) {
+
+        if (time > MONTH && time < YEAR) {
             return BigInteger.toString(time.divide(MONTH)) + " months";
         }
-        else if (time > YEAR) {
+
+        if (time > YEAR) {
             return numberWithCommas(BigInteger.toString(time.divide(YEAR)) + " years");
         }
     }
@@ -121,7 +137,7 @@ $(function () {
         }
     }
 
-    //Password strength analyzer
+    // Password strength analyzer.
     $("#analyze-password").on("keyup", function () {
         var searchSpace = 0;
         var combinations = BigInteger(0);
@@ -149,23 +165,10 @@ $(function () {
             complexity += 10;
         }
 
-        if (length >= 8) {
-            complexity += 10;
-        }
-        if (length >= 9) {
-            complexity += 10;
-        }
-        if (length >= 10) {
-            complexity += 10;
-        }
-        if (length >= 11) {
-            complexity += 10;
-        }
-        if (length >= 12) {
-            complexity += 10;
-        }
-        if (length >= 13) {
-            complexity += 10;
+        for (var i = 8; i <= 13; i++) {
+            if (length >= i) {
+                complexity += 10;
+            }
         }
 
         var base = BigInteger(searchSpace);
