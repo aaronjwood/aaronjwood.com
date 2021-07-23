@@ -115,20 +115,20 @@ $(function () {
     function complexitySlider(amount) {
         var bar = $("#password-complexity-meter");
         if (amount < 40) {
-            bar.removeClass("progress-bar-warning progress-bar-info progress-bar-success");
-            bar.addClass("progress-bar-danger");
+            bar.removeClass("bg-warning bg-info bg-success");
+            bar.addClass("bg-danger");
         }
         else if (amount >= 40 && amount < 70) {
-            bar.removeClass("progress-bar-danger progress-bar-info progress-bar-success");
-            bar.addClass("progress-bar-warning");
+            bar.removeClass("bg-danger bg-info bg-success");
+            bar.addClass("bg-warning");
         }
         else if (amount >= 80 && amount < 100) {
-            bar.removeClass("progress-bar-warning progress-bar-danger progress-bar-success");
-            bar.addClass("progress-bar-info");
+            bar.removeClass("bg-warning bg-danger bg-success");
+            bar.addClass("bg-info");
         }
         else if (amount == 100) {
-            bar.removeClass("progress-bar-warning progress-bar-danger progress-bar-info");
-            bar.addClass("progress-bar-success");
+            bar.removeClass("bg-warning bg-danger bg-info");
+            bar.addClass("bg-success");
         }
 
         var width = bar[0].style.width;

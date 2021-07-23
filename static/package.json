@@ -1,8 +1,11 @@
 {
   "dependencies": {
-    "bootstrap": "^3.4.1",
-    "biginteger": "^1.0.3",
-    "bootswatch": "^3.4.1+1",
-    "jquery": "^3.5.1"
+    "bootstrap": "5.0.2",
+    "biginteger": "1.0.3",
+    "bootswatch": "5.0.2",
+    "jquery": "3.6.0"
+  },
+  "devDependencies": {
+    "@popperjs/core": "2.9.2"
   }
 }

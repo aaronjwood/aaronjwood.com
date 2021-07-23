@@ -1,34 +1,13 @@
-@media (min-width: 768px) {
-    .navbar-nav {
-        margin: 0 auto;
-        display: table;
-        table-layout: fixed;
-        float: none;
-    }
-}
-
-html {
-    position: relative;
-    min-height: 100%;
-}
-
 body {
-    margin-bottom: 35px;
+    padding-top: 120px;
 }
 
-.navbar {
-    border-radius: unset;
+a {
+    text-decoration: none;
 }
 
-.wrapped-image {
-    margin-right: 10px;
-}
-
-.footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 35px;
+#development-activity img {
+    margin-right: 5px;
 }
 
 #password-analysis-table, .password-strength-table {
@@ -48,12 +27,4 @@ body {
 
 #hex-values {
     word-wrap: break-word;
-}
-
-#development-activity ul {
-    list-style-type: none;
-}
-
-code {
-    background-color: unset;
 }
