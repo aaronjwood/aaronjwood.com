@@ -7,86 +7,84 @@ Creating new objects in Kubernetes dynamically.
 {%- endblock -%}
 {% block content %}
 <div class="row">
-	<div class="col-md-12">
-		<div class="page-header text-center">
-			<h2>{{ self.title() }}</h2>
-			<h5>July, 2021</h5>
-		</div>
-	</div>
+    <div class="col-md-12">
+        <div class="page-header text-center">
+            <h2>{{ self.title() }}</h2>
+            <h5>July, 2021</h5>
+        </div>
+    </div>
 </div>
 <div class="row mt-4">
-	<div class="col-md-12">
-		<p>
-			I've had to program against Kubernetes a lot in the last few years and there were many times where I could
-			find almost no documentation, examples, or explanations around the work I needed to do.
-			It is these areas of work that I will be writing about in hopes of spreading the knowledge I found so hard
-			to sometimes obtain.
-			This will be a multipart series so lets first focus on how you would apply objects into Kubernetes in a
-			generic fashion.
-		</p>
-		<h3>Creating The Apply Method</h3>
-		<p>
-			First let's stub out what our method will look like.
-			<script src="https://gist.github.com/aaronjwood/1324208ef4c3991f66fa332a25092a7c.js"></script>
-			The meat of our method's input is the slice of resources it takes. Our resource type will hold a handful of
-			key fields.
-			<script src="https://gist.github.com/aaronjwood/a8b7c39dc8c361ad714086371da71503.js"></script>
-			Our resource type will hold information parsed from manifests given to us, just like how you would use
-			kubectl apply.
-			Now that we've defined our type to hold a resource parsed from a manifest we can fill out our method
-			completely.
-			<script src="https://gist.github.com/aaronjwood/eac5fe76357cbb845260925abd466570.js"></script>
-			Notice that there's support for handling updates to existing resources here.
-			This will be covered in more detail in part 2 so for now lets focus on the part that creates something new.
-			The method looks fairly simple at this point, but don't let that fool you.
-			The real chunk of this work comes from parsing a manifest (YAML), and converting each document in that
-			manifest to a resource.
-		</p>
-		<h3>Parsing Manifests</h3>
-		<p>
-			Parsing documents out of a manifest is the first thing we need to do here.
-			Once we are able to return back a slice of documents we can then turn each document into a resource which
-			we've defined above.
-			At the time the Kubernetes libraries did things very differently than what we wanted to do.
-			Manifests were converted from YAML to JSON, then parsed into structs. We wanted to parse the YAML directly.
-			<script src="https://gist.github.com/aaronjwood/2be08ced7e43c23900cb86785acdc897.js"></script>
-			There is a much faster way to do this without using regular expressions which I had started off with, but
-			the code was much more messy, complex, and harder to follow.
-			Note that the original way I had gone with was roughly 100x faster when we benchmarked it so if you require
-			more performance in this area I urge you <strong>not</strong> to use regular expressions.
-		</p>
-		<h3>Converting Documents Into Resources</h3>
-		<p>
-			Now that we are able to work with documents from a manifest we can now turn our attention to converting them
-			into resources.
-			There are three key things we need to do:
-		</p>
-		<ul>
-			<li>decode the document</li>
-			<li>search for fields</li>
-			<li>handle REST mapping</li>
-		</ul>
-		<p>
-			<script src="https://gist.github.com/aaronjwood/d0da96b9dd63e0206113578a041eb1a6.js"></script>
-			We can lean on the Kubernetes libraries to decode a document into an unstructured.
-			<script src="https://gist.github.com/aaronjwood/0299ae9a2e5dd43ccc8476dfcea1a219.js"></script>
-			Searching is straightforward, we just need to work with the unstructured APIs.
-			<script src="https://gist.github.com/aaronjwood/98cf21e031566909d15b52514b4a849a.js"></script>
-			Providing the REST mapping is the last piece.
-			<script src="https://gist.github.com/aaronjwood/e852f79f5ccc212e4ce5c8b5864a50c6.js"></script>
-		</p>
-		<h3>Stitching It Together</h3>
-		<p>
-			Now that we have all of the required pieces built out we can put it all together.
-			<script src="https://gist.github.com/aaronjwood/cccef38490e14e5eadfa8ed1c769c851.js"></script>
-			That's it, now you have a fully functioning, dynamic kubernetes object applier!
-		</p>
-		<h3>What's Next</h3>
-		<p>
-			In part 2 we will look at the handling updates as part of our apply logic.
-			We will cover the edge cases that need to be handled, especially the ones that are not so obvious or
-			documented.
-		</p>
-	</div>
+    <div class="col-md-12">
+        <p>
+            I've had to program against Kubernetes a lot in the last few years and there were many times where I could
+            find almost no documentation, examples, or explanations around the work I needed to do.
+            It is these areas of work that I will be writing about in hopes of spreading the knowledge I found so hard
+            to sometimes obtain.
+            This will be a multipart series so lets first focus on how you would apply objects into Kubernetes in a
+            generic fashion.
+        </p>
+        <h3>Creating The Apply Method</h3>
+        <p>
+            First let's stub out what our method will look like.
+            <script src="https://gist.github.com/aaronjwood/1324208ef4c3991f66fa332a25092a7c.js"></script>
+            The meat of our method's input is the slice of resources it takes. Our resource type will hold a handful of
+            key fields.
+            <script src="https://gist.github.com/aaronjwood/a8b7c39dc8c361ad714086371da71503.js"></script>
+            Our resource type will hold information parsed from manifests given to us, just like how you would use
+            kubectl apply.
+            Now that we've defined our type to hold a resource parsed from a manifest we can fill out our method
+            completely.
+            <script src="https://gist.github.com/aaronjwood/eac5fe76357cbb845260925abd466570.js"></script>
+            Notice that there's support for handling updates to existing resources here.
+            This will be covered in more detail in part 2 so for now lets focus on the part that creates something new.
+            The method looks fairly simple at this point, but don't let that fool you.
+            The real chunk of this work comes from parsing a manifest (YAML) and converting each document in that
+            manifest into a resource.
+        </p>
+        <h3>Parsing Manifests</h3>
+        <p>
+            Parsing documents out of a manifest is the first thing we need to do here.
+            Once we are able to return back a slice of documents we can then turn each document into a resource which
+            we've defined above.
+            At the time the Kubernetes libraries did things very differently than what we wanted to do.
+            Manifests were converted from YAML to JSON, then parsed into structs. We wanted to parse the YAML directly.
+            <script src="https://gist.github.com/aaronjwood/2be08ced7e43c23900cb86785acdc897.js"></script>
+            There is a much faster way to do this without using regular expressions which I had started off with, but
+            the code was much more messy, complex, and harder to follow.
+            Note that the original way I had gone with was roughly 100x faster when we benchmarked it so if you require
+            more performance in this area I urge you <strong>not</strong> to use regular expressions.
+        </p>
+        <h3>Converting Documents Into Resources</h3>
+        <p>
+            Now that we are able to work with documents from a manifest we can focus on converting them into resources. There are three key things we need to do:
+        </p>
+        <ul>
+            <li>decode the document</li>
+            <li>search for fields</li>
+            <li>handle REST mapping</li>
+        </ul>
+        <p>
+            <script src="https://gist.github.com/aaronjwood/d0da96b9dd63e0206113578a041eb1a6.js"></script>
+            We can lean on the Kubernetes libraries to decode a document into an unstructured.
+            <script src="https://gist.github.com/aaronjwood/0299ae9a2e5dd43ccc8476dfcea1a219.js"></script>
+            Searching is straightforward, we just need to work with the unstructured APIs.
+            <script src="https://gist.github.com/aaronjwood/98cf21e031566909d15b52514b4a849a.js"></script>
+            Providing the REST mapping is the last piece.
+            <script src="https://gist.github.com/aaronjwood/e852f79f5ccc212e4ce5c8b5864a50c6.js"></script>
+        </p>
+        <h3>Stitching It Together</h3>
+        <p>
+            Now that we have all of the required pieces built out we can put it all together.
+            <script src="https://gist.github.com/aaronjwood/cccef38490e14e5eadfa8ed1c769c851.js"></script>
+            That's it! You now have a fully functioning, dynamic kubernetes object applier.
+        </p>
+        <h3>What's Next</h3>
+        <p>
+            In part 2 we will look at the handling updates as part of our apply logic.
+            We will cover the edge cases that need to be handled, especially the ones that are not so obvious or
+            documented.
+        </p>
+    </div>
 </div>
 {% endblock %}
