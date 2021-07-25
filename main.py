@@ -64,10 +64,7 @@ def tools(tool):
 @app.route("/employment/<employer>/")
 @template_check
 def employment(employer):
-    try:
-        return render_template("employment/%s.html" % employer)
-    except TemplateNotFound:
-        abort(404)
+    return render_template("employment/%s.html" % employer)
 
 
 @app.route("/tools/hash/dohash", methods=["POST"])
