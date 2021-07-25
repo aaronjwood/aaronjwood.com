@@ -60,18 +60,20 @@ Creating new objects in Kubernetes dynamically.
 			Now that we are able to work with documents from a manifest we can now turn our attention to converting them
 			into resources.
 			There are three key things we need to do:
+		</p>
 		<ul>
 			<li>decode the document</li>
 			<li>search for fields</li>
 			<li>handle REST mapping</li>
 		</ul>
-		<script src="https://gist.github.com/aaronjwood/d0da96b9dd63e0206113578a041eb1a6.js"></script>
-		We can lean on the Kubernetes libraries to decode a document into an unstructured.
-		<script src="https://gist.github.com/aaronjwood/0299ae9a2e5dd43ccc8476dfcea1a219.js"></script>
-		Searching is straightforward, we just need to work with the unstructured APIs.
-		<script src="https://gist.github.com/aaronjwood/98cf21e031566909d15b52514b4a849a.js"></script>
-		Providing the REST mapping is the last piece.
-		<script src="https://gist.github.com/aaronjwood/e852f79f5ccc212e4ce5c8b5864a50c6.js"></script>
+		<p>
+			<script src="https://gist.github.com/aaronjwood/d0da96b9dd63e0206113578a041eb1a6.js"></script>
+			We can lean on the Kubernetes libraries to decode a document into an unstructured.
+			<script src="https://gist.github.com/aaronjwood/0299ae9a2e5dd43ccc8476dfcea1a219.js"></script>
+			Searching is straightforward, we just need to work with the unstructured APIs.
+			<script src="https://gist.github.com/aaronjwood/98cf21e031566909d15b52514b4a849a.js"></script>
+			Providing the REST mapping is the last piece.
+			<script src="https://gist.github.com/aaronjwood/e852f79f5ccc212e4ce5c8b5864a50c6.js"></script>
 		</p>
 		<h3>Stitching It Together</h3>
 		<p>
