@@ -24,7 +24,7 @@
                 AMD's pre-Zen era, know that it was pretty terrible. I had always planned to use ZFS from the beginning so I made sure to pump this
                 thing with 32 GB of (slow) DDR3.
                 <br />
-                <img class="img-responsive" src="/static/images/fm2-server.jpg" />
+                <img class="img-fluid" src="/static/images/fm2-server.jpg" />
                 <br /><br />
                 So yes, other than the good amount of RAM the hardware generally sucked.
             </p>
@@ -32,7 +32,7 @@
             <p>
                 I got unlucky with one of the batches of RAM I got:
                 <br />
-                <img class="img-responsive" src="/static/images/bad-ram.jpg" />
+                <img class="img-fluid" src="/static/images/bad-ram.jpg" />
                 <br />
                 After a small delay of RMA'ing one of the 2x8GB kits I was back in business.
             </p>
@@ -130,8 +130,8 @@
                 Fast forward to early 2020. I find my workstation I built back in 2013 for gaming, development, and various media workloads to be on its last legs.
                 I had built this machine with a i7 4770K (Haswell), 16 GB DDR3, a Z87 chipset, and some fancy (at the time) SATA SSDs:
                 <br />
-                <img class="img-responsive" src="/static/images/haswell-workstation-parts.jpg" />
-                <img class="img-responsive" src="/static/images/haswell-workstation-build.jpg" />
+                <img class="img-fluid" src="/static/images/haswell-workstation-parts.jpg" />
+                <img class="img-fluid" src="/static/images/haswell-workstation-build.jpg" />
                 <br /><br />
                 I had the chip overclocked from 3.5 GHz to 4.5 GHz on water for years but found that my water cooler was starting to perform very poorly so I had to remove the overclock.
                 Aside from that, it wasn't able to keep up with modern workloads very well at either frequency, and some of the newer games that had come out were too
@@ -142,8 +142,8 @@
                 I was eying and grabbed things as I could. I ended up going with the X570 chipset, 64 GB of fast DDR4, water cooling (again, but this time
                 something much more potent), and a bunch of PCIe SSDs:
                 <br />
-                <img class="img-responsive" src="/static/images/zen-2-workstation-parts.jpg" />
-                <img class="img-responsive" src="/static/images/zen-2-workstation-build.jpg" />
+                <img class="img-fluid" src="/static/images/zen-2-workstation-parts.jpg" />
+                <img class="img-fluid" src="/static/images/zen-2-workstation-build.jpg" />
             </p>
             <p>
                 As you can probably imagine, the CPU in my server was barely able to keep up with everything I wanted out of my server, even before this point.
@@ -189,15 +189,15 @@
                 Now my host didn't need a network cable anymore. Previous it was connected to this same NIC when the NIC was in my now-retired server. All that was needed was to create an internal
                 vSwitch, attach one end to the VM, and attach the other end to my host:
                 <br />
-                <img class="img-responsive" src="/static/images/vswitch.png" />
-                <img class="img-responsive" src="/static/images/gateway.png" />
+                <img class="img-fluid" src="/static/images/vswitch.png" />
+                <img class="img-fluid" src="/static/images/gateway.png" />
                 <br /><br />
                 After this point pretty much everything was the same except for a few small quirks. MAC address spoofing needed to be enabled on this VM for everything to work 100% correctly.
                 I also wanted secure boot (UEFI, no legacy BIOS booting) enabled and working (this applied to all my VMs) which took a few bits of extra work. Lastly, I wanted to expose my CPU's firmware-based
                 <a href="https://en.wikipedia.org/wiki/Trusted_Platform_Module">TPM</a> capabilities (again, applied to all of my VMs) which added, again, just a bit more work. Here's how everything looked after
                 getting the gateway setup:
                 <br />
-                <img class="img-responsive" src="/static/images/gateway-topology.png">
+                <img class="img-fluid" src="/static/images/gateway-topology.png">
                 <br />
                 <br />
                 You'll notice a pattern here: anything external to the workstation is connected to my physical NIC inside of the workstation for LAN/WAN access. Anything internal to the
@@ -209,7 +209,7 @@
                 <a href="http://www.norcotek.com/wp-content/uploads/2015/11/ARC_8026_manual.pdf">ARC-8026</a> inside. This was a godsend as this solved a huge problem for me when moving
                 to this new setup.
                 <br />
-                <img class="img-responsive" src="/static/images/norco.jpg" />
+                <img class="img-fluid" src="/static/images/norco.jpg" />
                 <br /><br />
                 All I needed to do was get an HBA card into my new workstation build. I decided on going with
                 <a href="https://www.dell.com/en-us/shop/dell-sas-12gbps-host-bus-adapter-external-controller-low-profile/apd/405-aaes">this SAS 3008 card</a> as it was very well supported by
@@ -224,7 +224,7 @@
                 that the firmware I needed was buried inside one of Dell's .exe files that you can get to try and flash the card from within Windows. After extracting the firmware out of
                 the .exe I was finally able to update the card successfully:
                 <br />
-                <img class="img-responsive" src="/static/images/hba-flash.jpg" />
+                <img class="img-fluid" src="/static/images/hba-flash.jpg" />
             </p>
             <h3>Finising The Second VM</h3>
             <p>
