@@ -13,24 +13,22 @@ $(function () {
     var hashTable = $("#hash-table");
     $("#hash-text").on("keyup", function (event) {
         var key = $(this).val();
-        if (event.which != '13') {
-            if (hashCache[key] !== undefined) {
-                hashTable.html(hashCache[key]);
-                return;
-            }
-
-            $.post("dohash", {key}, function (hash) {
-                var data = "";
-                $.each(hash, function (k, v) {
-                    data += $("<tr>").append(
-                        $("<td>").text(k),
-                        $("<td>").text(v)
-                    )[0].outerHTML;
-                });
-                hashTable.html(data);
-                hashCache[key] = data;
-            });
+        if (hashCache[key] !== undefined) {
+            hashTable.html(hashCache[key]);
+            return;
         }
+
+        $.post("dohash", { key }, function (hash) {
+            var data = "";
+            $.each(hash, function (k, v) {
+                data += $("<tr>").append(
+                    $("<td>").text(k),
+                    $("<td>").text(v)
+                )[0].outerHTML;
+            });
+            hashTable.html(data);
+            hashCache[key] = data;
+        });
     });
 
     // Hex generator.
@@ -133,7 +131,7 @@ $(function () {
 
         var width = bar[0].style.width;
         if (width.substring(0, width.length - 1) != amount) {
-            bar.stop().attr("aria-valuenow", amount).animate({"width": amount + "%"}, 50);
+            bar.stop().attr("aria-valuenow", amount).animate({ "width": amount + "%" }, 50);
         }
     }
 
