@@ -1,0 +1,269 @@
+{% extends "layout.html" %}
+{%- block title -%}
+    Resilient, Performant Persistence
+{%- endblock -%}
+{%- block description -%}
+    Addressing storage performance, resiliency, and efficiency.
+{%- endblock -%}
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-header text-center">
+                <h2>{{ self.title() }}</h2>
+                <h5>October, 2022</h5>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <h3>Reworking The Great Consolidation</h3>
+            <p>
+                A lot has changed since I finished my <a href="/articles/the-great-consolidation-recursive-homelab-build/">recursive homelab build</a> two years ago.
+                While an <em>excellent</em> learning experience using Windows Server as the hypervisor and ZFS inside of a VM was the wrong choice.
+                The reasons behind this statement are many and can very well be an entire write-up on its own.
+                I have now switched to using Linux as the hypervisor with Windows as one of the VMs using the GPU via <a target="_blank" href="https://www.kernel.org/doc/html/latest/driver-api/vfio.html">PCI passthrough.</a>
+                As far as the physical storage layout goes not a whole lot has changed.
+                I have changed caching strategies a few times as I've learned how to better tune ZFS for my various workloads, otherwise the only real change is the addition of more physical disks.
+            </p>
+            <h3>Why ZFS?</h3>
+            <p>
+                ZFS is a powerful, complicated file system. Over time I found that you really need to tune it to your workload in order to keep performance relatively high.
+                The main reason for why I chose ZFS is it's superior claims to resiliency among other things:
+                <ol>
+                    <li>
+                        <a target="_blank" href="https://openzfs.github.io/openzfs-docs/Basic%20Concepts/Checksums.html">Checksumming and self-healing</a> are prioritized above everything else
+                    </li>
+                    <li>It eliminates the need for physical RAID cards and the vendor lock-in they carry</li>
+                    <li>
+                        It provides excellent <a target="_blank" href="https://openzfs.github.io/openzfs-docs/Performance%20and%20Tuning/Workload%20Tuning.html#adaptive-replacement-cache">caching capabilities</a>
+                    </li>
+                    <li>
+                        Various <a target="_blank" href="https://openzfs.github.io/openzfs-docs/Performance%20and%20Tuning/Workload%20Tuning.html#compression">transparent compression algorithms</a> are supported
+                    </li>
+                </ol>
+                If you care about your data you want to be using a file system like this.
+            </p>
+            <h3>Physical Layout</h3>
+            <p>
+                Since I'm using ZFS this is easy to describe as it is very much a <a target="_blank" href="https://en.wikipedia.org/wiki/Non-RAID_drive_architectures#JBOD">JBOD.</a>
+            </p>
+            <h5>HDDs</h5>
+            <p>
+                There are 12 SATA III spinning disks that sit inside the Norco enclosure.
+                Not every disk is of the same capacity but they are all Western Digital's.
+                None of the disks use <a target="_blank" href="https://en.wikipedia.org/wiki/Shingled_magnetic_recording">SMR</a> which I explicitly made sure of when I was building this out.
+                The only disks that use SMR are a couple of spares that I use for cold storage backups. 
+            </p>
+            <h5>SSDs</h5>
+            <p>
+                The various NAND flash disks are a bit more mixed.
+                There are two HP 2TB PCIe 3.0 NVMe drives, two Kingston 240GB SATA III drives, and three Crucial SATA III drives.
+                All of these drives live either on the <a target="_blank" href="https://www.asrock.com/mb/amd/x570%20taichi/">motherboard</a> (NVMes) or somewhere in the <a target="_blank" href="https://www.corsair.com/us/en/Categories/Products/Cases/Carbide-Series%E2%84%A2-Air-540-High-Airflow-ATX-Cube-Case/p/CC-9011030-WW">case.</a>
+            </p>
+            <h5>Why So Many Disks?</h5>
+            <p>
+                I use my server for <em>many</em> things, usually in parallel and for multiple people connecting from different places:
+                <ul>
+                    <li>A file/media server</li>
+                    <li>
+                        <a target="_blank" href="https://www.proxmox.com/en/proxmox-backup-server">A backup server</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="https://bitwarden.com/open-source/">Password management</a>
+                    </li>
+                    <li>A web server, which serves this site among a few other things that other software relies on</li>
+                    <li>
+                        An <a target="_blank" href="https://frigate.video/">NVR</a> which serves a handful of cameras
+                    </li>
+                    <li>
+                        Real time AI object detection for the NVR using a <a target="_blank" href="https://coral.ai/products/pcie-accelerator/">TPU</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="https://gitea.io/en-us/">A Git server</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="https://github.com/linuxserver/docker-unifi-controller">A network controller</a> to manage a few <a target="_blank" href="https://store.ui.com/products/u6-lite-us">WAPs</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="https://github.com/adriankumpf/teslamate">Electric car monitoring</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="https://www.home-assistant.io/">Home automation</a>
+                    </li>
+                    <li>Host and VM monitoring</li>
+                    <li>
+                        <a target="_blank" href="https://www.wireguard.com/">A VPN</a>
+                    </li>
+                    <li>A remote-friendly development environment</li>
+                    <li>Gaming (Windows VM with a 2080 Ti passed through)</li>
+                    <li>
+                        Remote gaming via streaming using <a target="_blank" href="https://moonlight-stream.org/">Moonlight</a> or Steam Link
+                    </li>
+                    <li>
+                        <a target="_blank" href="https://boinc.bakerlab.org/">Scientific computing</a>
+                    </li>
+                    <li>Many other things</li>
+                </ul>
+                Other than wanting lots of raw storage to last me many years I also wanted as much performance as possible.
+                This is partly why I originally went with a 3950X, the 16 cores/32 threads are very much needed!
+            </p>
+            <h3>Logical Layout</h3>
+            <p>
+                There are two pools, one backed by the NVMe drives and another backed by the SATA HDDs/SSDs.
+            </p>
+            <h5>Faster But Small</h5>
+            <p>
+                This is where the host and all of the VM block devices live.
+                The only exception to this is the block device that attaches to the Windows VM as it is far too big to fit into this pool.
+                <pre>
+  pool: rpool
+ state: ONLINE
+  scan: scrub repaired 0B in 00:17:25 with 0 errors on Sun Oct  9 00:41:26 2022
+config:
+
+        NAME                                             STATE     READ WRITE CKSUM
+        rpool                                            ONLINE       0     0     0
+          mirror-0                                       ONLINE       0     0     0
+            nvme-HP_SSD_EX950_2TB_xxxxxxxxxxxxxxx-part3  ONLINE       0     0     0
+            nvme-HP_SSD_EX950_2TB_xxxxxxxxxxxxxxx-part3  ONLINE       0     0     0
+
+errors: No known data errors
+                </pre>
+            </p>
+            <h5>Slower But Large</h5>
+            <p>
+                This is where everything else lives.
+                <pre>
+  pool: vault
+ state: ONLINE
+  scan: scrub repaired 0B in 11:26:36 with 0 errors on Sun Oct  9 11:50:38 2022
+config:
+
+        NAME                                            STATE     READ WRITE CKSUM
+        vault                                           ONLINE       0     0     0
+          mirror-0                                      ONLINE       0     0     0
+            wwn-0xxxxxxxxxxxxxxxxx                      ONLINE       0     0     0
+            wwn-0xxxxxxxxxxxxxxxxx                      ONLINE       0     0     0
+          mirror-1                                      ONLINE       0     0     0
+            wwn-0xxxxxxxxxxxxxxxxx                      ONLINE       0     0     0
+            wwn-0xxxxxxxxxxxxxxxxx                      ONLINE       0     0     0
+          mirror-2                                      ONLINE       0     0     0
+            wwn-0xxxxxxxxxxxxxxxxx                      ONLINE       0     0     0
+            wwn-0xxxxxxxxxxxxxxxxx                      ONLINE       0     0     0
+          mirror-3                                      ONLINE       0     0     0
+            wwn-0xxxxxxxxxxxxxxxxx                      ONLINE       0     0     0
+            wwn-0xxxxxxxxxxxxxxxxx                      ONLINE       0     0     0
+          mirror-4                                      ONLINE       0     0     0
+            wwn-0xxxxxxxxxxxxxxxxx                      ONLINE       0     0     0
+            wwn-0xxxxxxxxxxxxxxxxx                      ONLINE       0     0     0
+          mirror-6                                      ONLINE       0     0     0
+            wwn-0xxxxxxxxxxxxxxxxx                      ONLINE       0     0     0
+            wwn-0xxxxxxxxxxxxxxxxx                      ONLINE       0     0     0
+        special
+          mirror-5                                      ONLINE       0     0     0
+            ata-KINGSTON_SA400S37240G_xxxxxxxxxxxxxxxx  ONLINE       0     0     0
+            ata-KINGSTON_SA400S37240G_xxxxxxxxxxxxxxxx  ONLINE       0     0     0
+        cache
+          ata-Crucial_CT1050MX300SSD1_xxxxxxxxxxxx      ONLINE       0     0     0
+          ata-Crucial_CT750MX300SSD1_xxxxxxxxxxxx       ONLINE       0     0     0
+          ata-Crucial_CT750MX300SSD1_xxxxxxxxxxxx       ONLINE       0     0     0
+
+errors: No known data errors
+                </pre>
+            </p>
+            <h3>Performance</h3>
+            <p>
+                There are a few major factors that contribute to improving performance across the board:
+                <ol>
+                    <li>Having lots of RAM for an effective ARC</li>
+                    <li>Making use of an SSD-based striped L2ARC (the three Crucial SSDs are just for this)</li>
+                    <li>Using "special" vdevs (the two Kingston SSDs are dedicated for this) to greatly speed up metadata reads/writes</li>
+                    <li>Using the right record size for datasets or block size for block devices (this impacts the NVMe-backed pool as well)</li>
+                    <li>Using the correct ashift value when creating pools</li>
+                </ol>
+                Over time I have learned that point 4 above cannot be understated.
+                If you are able to tune for your workload this will have more of an impact than you can imagine.
+                There are many reasons for this, some of them complicated and related to the internals of how ZFS works.
+                For example, the larger your record/block size the less metadata that will be used.
+                This can reduce a massive amount of space in the ARC that is filled by metadata instead data.
+                If an L2ARC is being used and is much larger than the size of your RAM then the amount of metadata in the ARC used to manage the L2ARC can be <em>greatly</em> reduced.
+            </p>
+            <p>
+                Additionally, the use of the correct ashift value for your pools is crucial. You can think of the ashift value as the exponent to the base of 2.
+                Ashift is used for controlling the alignment shift and it should always match up to what your devices use.
+                For example, many modern drives use 4k sector size. If your pool is filled with these drives then you'd want an ashift value of 12 as 2^12 = 4096.
+                Some newer SSDs use an 8k sector size which would necessitate an ashift value of 13.
+            </p>
+            <h3>Resiliency</h3>
+            <p>
+                You'll notice one thing in common with the two pools above: they both make use of <a target="_blank" href="https://openzfs.github.io/openzfs-docs/Performance%20and%20Tuning/Workload%20Tuning.html#pool-geometry">mirrored vdevs.</a>
+                Mirrored vdevs have a few advantages:
+                <ol>
+                    <li>They offer better performance for my workload than RAID-Z</li>
+                    <li>They are incredibly easy to expand</li>
+                    <li>The fault toleration probabilities are very good</li>
+                </ol>
+                They are not without disadvantages:
+                <ol>
+                    <li>Raw storage is cut in <em>half</em></li>
+                    <li>ZFS will soon add support for expanding RAID-Z pools which somewhat negates point 2 above</li>
+                </ol>
+                Each vdev can survive one disk failure (total of 6 disk failures) without the pool encountering any data loss.
+                The catch is if any one vdev has both of its disks fail there is immediate data loss.
+            </p>
+            <h3>Efficiency</h3>
+            <p>
+                    ZFS offers many ways to transparently compress your data, and since I do care about performance I opted to stick with <a target="_blank" href="https://github.com/lz4/lz4">LZ4.</a>
+                    It is even the <a target="_blank" href="https://openzfs.github.io/openzfs-docs/Performance%20and%20Tuning/Workload%20Tuning.html#lz4-compression">recommended algorithm.</a>
+                    To give you an idea of the impact compression can make have a look at what it did for me for my block device that is used by the Windows VM for storing games:
+                    <pre>
+                        NAME                       USED  AVAIL     REFER  MOUNTPOINT
+                        vault/vz/vm-104-disk-0    9.00T  40.7T     9.00T  -
+
+                        NAME                                            PROPERTY       VALUE  SOURCE
+                        vault/vz/vm-104-disk-0                          compressratio  1.29x  -
+                    </pre>
+                    That is a 29% savings on 9TB which equals out to a 2.61TB reduction.
+            </p>
+            <h3>Backup Strategy</h3>
+            <p>
+                All of the data on the NVMe-backed pool is backed up to the other pool on a nightly basis.
+                Those backups along with most of the other data in the large pool is backed up to cold storage on a weekly basis using snapshots with ZFS replication.
+                Backups make use of the same compression, record size, and block size settings from the source pools but are encrypted using AES-256 <a target="_blank" href="https://en.wikipedia.org/wiki/Galois/Counter_Mode">GCM.</a>
+            </p>
+            <h3>Closing Thoughts, Results, And Recommendations</h3>
+            <p>
+                After using ZFS for many years I can confidently recommend it.
+                It has saved me more times than I can remember, and it provides an excellent foundation for whatever you're doing.
+                The learning curve can be steep, and it can take some time to understand how to tune it to your workload.
+                With some careful planning and light research you can quickly create a rock solid storage layer for your needs.
+            </p>
+            <p>
+                While things can greatly vary depending on your hardware, workload, and access patterns here's what you might expect to see if you use and tune ZFS in a similar way:
+                <img class="img-fluid" src="/static/images/arc-stats.jpg" />
+                <img class="img-fluid" src="/static/images/l2arc-stats.jpg" />
+            </p>
+            <p>
+                If you're interested to follow a setup like mine here is how you can achieve it.
+            </p>
+            <h5>Mirrored Root File System Pool</h5>
+            <p>
+                I'm currently using Proxmox so I relied on <a target="_blank" href="https://pve.proxmox.com/wiki/ZFS_on_Linux#_installation_as_root_file_system">their tooling</a> to accomplish this.
+            </p>
+            <h5>Large Pool</h5>
+            <p>
+                <pre>zpool create -o ashift=12 POOL_NAME mirror DISK1_ID DISK2_ID mirror DISK3_ID DISK3_ID ... # use a different ashift if your devices aren't using 4k sectors</pre>
+                <pre>zfs set xattr=sa POOL_NAME # pool-wide</pre>
+                <pre>zfs set compression=on POOL_NAME # pool-wide, currently defaults to LZ4</pre>
+                <pre>zfs set recordsize=1M POOL_NAME/DATASET_NAME # for any datasets that primarily store files >= 1MB</pre>
+                <pre>zfs create -V SIZE -o volblocksize=1M POOL_NAME/VOL_NAME # for block devices that primarily store files >= 1MB</pre>
+                <pre>zpool add POOL_NAME cache DISK1_ID DISK2_ID ... # adds an L2ARC to the pool</pre>
+                <pre>zpool add POOL_NAME special mirror DISK1_ID DISK2_ID # adds a mirrored special vdev to the pool</pre>
+            </p>
+            <h5>Cold Storage Pool(s)</h5>
+            <p>
+                <pre>zpool create -o ashift=12 -O encryption=aes-256-gcm -O keyformat=passphrase -O keylocation=prompt POOL_NAME DEVICE_NAME</pre>
+            </p>
+        </div>
+    </div>
+{% endblock %}
