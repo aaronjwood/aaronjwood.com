@@ -252,7 +252,7 @@ errors: No known data errors
             </p>
             <h5>Large Pool</h5>
             <p>
-                <pre>zpool create -o ashift=12 POOL_NAME mirror DISK1_ID DISK2_ID mirror DISK3_ID DISK3_ID ... # use a different ashift if your devices aren't using 4k sectors</pre>
+                <pre>zpool create -o ashift=12 POOL_NAME mirror DISK1_ID DISK2_ID mirror DISK3_ID DISK4_ID ... # use a different ashift if your devices aren't using 4k sectors</pre>
                 <pre>zfs set xattr=sa POOL_NAME # pool-wide</pre>
                 <pre>zfs set compression=on POOL_NAME # pool-wide, currently defaults to LZ4</pre>
                 <pre>zfs set recordsize=1M POOL_NAME/DATASET_NAME # for any datasets that primarily store files >= 1MB</pre>
