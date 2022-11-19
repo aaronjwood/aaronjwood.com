@@ -217,13 +217,13 @@ errors: No known data errors
                     It is even the <a target="_blank" href="https://openzfs.github.io/openzfs-docs/Performance%20and%20Tuning/Workload%20Tuning.html#lz4-compression">recommended algorithm.</a>
                     To give you an idea of the impact compression can make have a look at what it did for me for my block device that is used by the Windows VM for storing games:
                     <pre>
-                        NAME                       USED  AVAIL     REFER  MOUNTPOINT
-                        vault/vz/vm-104-disk-0    9.00T  40.7T     9.00T  -
+NAME                       USED  AVAIL     REFER  MOUNTPOINT
+vault/vz/vm-104-disk-0    9.00T  40.7T     9.00T  -
 
-                        NAME                                            PROPERTY       VALUE  SOURCE
-                        vault/vz/vm-104-disk-0                          compressratio  1.29x  -
+NAME                                            PROPERTY       VALUE  SOURCE
+vault/vz/vm-104-disk-0                          compressratio  1.29x  -
                     </pre>
-                    That is a 29% savings on 9TB which equals out to a 2.61TB reduction.
+                    That is a 29% savings on the block device's original size of ~11.6TB.
             </p>
             <h3>Backup Strategy</h3>
             <p>
