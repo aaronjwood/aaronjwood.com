@@ -1,33 +1,31 @@
 $(function () {
 
-    // Fetch github data.
-    if (window.location.pathname === "/") {
-        $.get("/dev-activity/", function (data) {
-            $("#loader").remove();
-            $("#development-activity").html(data);
-        });
-    }
-
     // Hash generator.
     var hashCache = {};
     var hashTable = $("#hash-table");
     $("#hash-text").on("keyup", function (event) {
-        var key = $(this).val();
-        if (hashCache[key] !== undefined) {
-            hashTable.html(hashCache[key]);
+        var text = $(this).val();
+        if (hashCache[text] !== undefined) {
+            hashTable.html(hashCache[text]);
             return;
         }
 
-        $.post("dohash", { key }, function (hash) {
-            var data = "";
-            $.each(hash, function (k, v) {
-                data += $("<tr>").append(
-                    $("<td>").text(k),
-                    $("<td>").text(v)
-                )[0].outerHTML;
-            });
-            hashTable.html(data);
-            hashCache[key] = data;
+        $.post({
+            url: "do",
+            data: JSON.stringify({text: text}),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (hashes) {
+                var data = "";
+                $.each(hashes, function (k, v) {
+                    data += $("<tr>").append(
+                        $("<td>").text(k),
+                        $("<td>").text(v)
+                    )[0].outerHTML;
+                });
+                hashTable.html(data);
+                hashCache[text] = data;
+            }
         });
     });
 
@@ -41,7 +39,7 @@ $(function () {
         var type = $(".hex-type:checked").val();
         if (type === "Decimal") {
             hexText.val(hexText.val().replace(/[^0-9]/gi, ""));
-            var number = BigInteger.parse(hexText.val().replace(/[A-Za-z]/gi, ""));
+            var number = BigInt(hexText.val().replace(/[A-Za-z]/gi, ""));
             hexValues.text(number.toString(16));
             return;
         }
@@ -69,43 +67,43 @@ $(function () {
 
     // Calculate the time necessary to crack a password.
     function timeToCrack(combinations, guessesPerSecond) {
-        var HOUR = 60;
-        var DAY = 1440;
-        var WEEK = 10080;
-        var MONTH = 43800;
-        var YEAR = 525600;
+        var HOUR = 60n;
+        var DAY = 1440n;
+        var WEEK = 10080n;
+        var MONTH = 43800n;
+        var YEAR = 525600n;
 
-        if (combinations.isZero()) {
+        if (combinations === BigInt(0)) {
             return 0;
         }
 
-        var time = combinations.divide(guessesPerSecond).divide(HOUR);
-        if (time.isZero()) {
+        var time = combinations / BigInt(guessesPerSecond) / HOUR;
+        if (time === BigInt(0)) {
             return "Less than 1 second!";
         }
 
         if (time < HOUR) {
-            return BigInteger.toString(time) + " minutes";
+            return time + " minutes";
         }
 
         if (time > HOUR && time < DAY) {
-            return BigInteger.toString(time.divide(HOUR)) + " hours";
+            return time / HOUR + " hours";
         }
 
         if (time > DAY && time < WEEK) {
-            return BigInteger.toString(time.divide(DAY)) + " days";
+            return time / DAY + " days";
         }
 
         if (time > WEEK && time < MONTH) {
-            return BigInteger.toString(time.divide(WEEK)) + " weeks";
+            return time / WEEK + " weeks";
         }
 
         if (time > MONTH && time < YEAR) {
-            return BigInteger.toString(time.divide(MONTH)) + " months";
+            return time / MONTH + " months";
         }
 
         if (time > YEAR) {
-            return numberWithCommas(BigInteger.toString(time.divide(YEAR)) + " years");
+            return numberWithCommas(time / YEAR + " years");
         }
     }
 
@@ -137,29 +135,29 @@ $(function () {
 
     // Password strength analyzer.
     $("#analyze-password").on("keyup", function () {
-        var searchSpace = 0;
-        var combinations = BigInteger(0);
+        var searchSpace = 0n;
+        var combinations = 0n;
         var input = $(this).val();
         var length = input.length;
         var complexity = 0;
 
         if (input.match(/[a-z]/g)) {
-            searchSpace += 26;
+            searchSpace += 26n;
             complexity += 10;
         }
 
         if (input.match(/[A-Z]/g)) {
-            searchSpace += 26;
+            searchSpace += 26n;
             complexity += 10;
         }
 
         if (input.match(/[0-9]/g)) {
-            searchSpace += 10;
+            searchSpace += 10n;
             complexity += 10;
         }
 
         if (input.match(/\W/g)) {
-            searchSpace += 33;
+            searchSpace += 33n;
             complexity += 10;
         }
 
@@ -169,17 +167,15 @@ $(function () {
             }
         }
 
-        var base = BigInteger(searchSpace);
         for (var i = 1; i <= length; i++) {
-            var raised = base.pow(i);
-            combinations = combinations.add(raised);
+            combinations += searchSpace ** BigInt(i);
         }
 
         complexitySlider(complexity);
 
         $("#password-search-space").text(searchSpace);
         $("#password-length").text(length);
-        $("#password-combinations").text(numberWithCommas(BigInteger.toString(combinations)));
+        $("#password-combinations").text(numberWithCommas(combinations));
 
         $("#cpu-scenario").text(timeToCrack(combinations, 4500));
         $("#gpu-scenario").text(timeToCrack(combinations, 700000000));
