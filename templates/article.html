@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{%- block title -%}{{ data.title() }}{%- endblock -%}
+{%- block description -%}{{ data.description() }}{%- endblock -%}
+{%- block content -%}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-header text-center">
+                <h2>{{ data.title() }}</h2>
+                <h5>{{ data.date() }}</h5>
+            </div>
+        </div>
+    </div>
+    {%- block article -%}{%- endblock -%}
+{%- endblock -%}

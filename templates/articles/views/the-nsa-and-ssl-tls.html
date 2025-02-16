@@ -1,20 +1,6 @@
-{% extends "layout.html" %}
-{%- block title -%}
-The NSA and SSL/TLS
-{%- endblock -%}
-{%- block description -%}
-    An in-depth overview of the SSL and TLS protocols, the encryption behind them, and what the NSA is and isn't able
-    to do with data encrypted by them.
-{%- endblock -%}
-{% block content %}
-    <div class="row">
-        <div class="col-md-12">
-            <div class="page-header text-center">
-                <h2>{{ self.title() }}</h2>
-                <h5>April, 2015</h5>
-            </div>
-        </div>
-    </div>
+{%- import "articles/models/the-nsa-and-ssl-tls.jinja" as data -%}
+{% extends "article.html" %}
+{% block article %}
     <div class="row mt-4">
         <div class="col-md-12">
             <p>

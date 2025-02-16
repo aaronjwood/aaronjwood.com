@@ -1,19 +1,6 @@
-{% extends "layout.html" %}
-{%- block title -%}
-    Rootkits - Detection and Removal
-{%- endblock -%}
-{%- block description -%}
-    A quick analysis of rootkits, what they are, how they work, and how they can be removed with special tools.
-{%- endblock -%}
-{% block content %}
-    <div class="row">
-        <div class="col-md-12">
-            <div class="page-header text-center">
-                <h2>{{ self.title() }}</h2>
-                <h5>March, 2015</h5>
-            </div>
-        </div>
-    </div>
+{%- import "articles/models/rootkits.jinja" as data -%}
+{% extends "article.html" %}
+{% block article %}
     <div class="row mt-4">
         <div class="col-md-12">
             <h3>What are rootkits?</h3>

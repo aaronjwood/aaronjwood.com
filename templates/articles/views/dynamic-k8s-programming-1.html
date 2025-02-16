@@ -1,19 +1,6 @@
-{% extends "layout.html" %}
-{%- block title -%}
-Dynamic Kubernetes Programming - Part 1
-{%- endblock -%}
-{%- block description -%}
-Creating new objects in Kubernetes dynamically.
-{%- endblock -%}
-{% block content %}
-<div class="row">
-    <div class="col-md-12">
-        <div class="page-header text-center">
-            <h2>{{ self.title() }}</h2>
-            <h5>July, 2021</h5>
-        </div>
-    </div>
-</div>
+{%- import "articles/models/dynamic-k8s-programming-1.jinja" as data -%}
+{% extends "article.html" %}
+{% block article %}
 <div class="row mt-4">
     <div class="col-md-12">
         <p>

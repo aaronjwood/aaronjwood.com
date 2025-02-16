@@ -112,4 +112,4 @@ async def do_hash(payload: HashPayload):
 
 @app.get("/articles/{article}/", response_class=HTMLResponse)
 async def articles(request: Request, article: str):
-    return await parse_template(request, f"articles/{article}.html")
+    return await parse_template(request, f"articles/views/{article}.html")

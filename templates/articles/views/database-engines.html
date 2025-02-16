@@ -1,20 +1,6 @@
-{% extends "layout.html" %}
-{%- block title -%}
-Database Engines - MyISAM vs InnoDB
-{%- endblock -%}
-{%- block description -%}
-    A look into the MyISAM and InnoDB storage engines comparing read/write performance, locking, transaction support,
-    and indexing.
-{%- endblock -%}
-{% block content %}
-    <div class="row">
-        <div class="col-md-12">
-            <div class="page-header text-center">
-                <h2>{{ self.title() }}</h2>
-                <h5>June, 2013</h5>
-            </div>
-        </div>
-    </div>
+{%- import "articles/models/database-engines.jinja" as data -%}
+{% extends "article.html" %}
+{% block article %}
     <div class="row mt-4">
         <div class="col-md-12">
             <p>

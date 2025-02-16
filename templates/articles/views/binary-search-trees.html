@@ -1,20 +1,6 @@
-{% extends "layout.html" %}
-{%- block title -%}
-    Binary Search Trees - Measuring Six Different Languages
-{%- endblock -%}
-{%- block description -%}
-    A look at the execution time and memory usage taken by six different languages to run through a very large binary
-    search tree.
-{%- endblock -%}
-{% block content %}
-    <div class="row">
-        <div class="col-md-12">
-            <div class="page-header text-center">
-                <h2>{{ self.title() }}</h2>
-                <h5>November, 2015</h5>
-            </div>
-        </div>
-    </div>
+{%- import "articles/models/binary-search-trees.jinja" as data -%}
+{% extends "article.html" %}
+{% block article %}
     <div class="row mt-4">
         <div class="col-md-12">
             <p>

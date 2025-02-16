@@ -1,19 +1,6 @@
-{% extends "layout.html" %}
-{%- block title -%}
-    The Great Consolidation - Recursive Homelab Build
-{%- endblock -%}
-{%- block description -%}
-    How I collapsed all of my workloads onto one machine using a recursive build.
-{%- endblock -%}
-{% block content %}
-    <div class="row">
-        <div class="col-md-12">
-            <div class="page-header text-center">
-                <h2>{{ self.title() }}</h2>
-                <h5>May, 2020</h5>
-            </div>
-        </div>
-    </div>
+{%- import "articles/models/the-great-consolidation-recursive-homelab-build.jinja" as data -%}
+{% extends "article.html" %}
+{% block article %}
     <div class="row mt-4">
         <div class="col-md-12">
             <h3>The Beginning</h3>

@@ -1,19 +1,6 @@
-{% extends "layout.html" %}
-{%- block title -%}
-    Resilient, Performant Persistence
-{%- endblock -%}
-{%- block description -%}
-    Addressing storage performance, resiliency, and efficiency.
-{%- endblock -%}
-{% block content %}
-    <div class="row">
-        <div class="col-md-12">
-            <div class="page-header text-center">
-                <h2>{{ self.title() }}</h2>
-                <h5>October, 2022</h5>
-            </div>
-        </div>
-    </div>
+{%- import "articles/models/resilient-performant-persistence.jinja" as data -%}
+{% extends "article.html" %}
+{% block article %}
     <div class="row mt-4">
         <div class="col-md-12">
             <h3>Reworking The Great Consolidation</h3>
