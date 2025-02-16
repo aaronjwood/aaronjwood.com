@@ -3,7 +3,7 @@ $(function () {
     // Hash generator.
     var hashCache = {};
     var hashTable = $("#hash-table");
-    $("#hash-text").on("keyup", function (event) {
+    $("#hash-text").on("input", function (event) {
         var text = $(this).val();
         if (hashCache[text] !== undefined) {
             hashTable.html(hashCache[text]);
@@ -12,7 +12,7 @@ $(function () {
 
         $.post({
             url: "do",
-            data: JSON.stringify({text: text}),
+            data: JSON.stringify({ text: text }),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (hashes) {
@@ -32,9 +32,10 @@ $(function () {
     // Hex generator.
     var hexText = $("#hex-text")
     $(".hex-type").on("change", function () {
-        hexText.trigger("keyup");
+        $("#hex-values").text("");
+        hexText.val("");
     });
-    hexText.on("keyup", function () {
+    hexText.on("input", function () {
         var hexValues = $("#hex-values");
         var type = $(".hex-type:checked").val();
         if (type === "Decimal") {
@@ -54,7 +55,7 @@ $(function () {
 
     // Character counter.
     var numCharacters = $("#num-characters");
-    $("#character-box").on("keyup", function () {
+    $("#character-box").on("input", function () {
         numCharacters.html($(this).val().length);
     });
 
@@ -129,12 +130,12 @@ $(function () {
 
         var width = bar[0].style.width;
         if (width.substring(0, width.length - 1) != amount) {
-            bar.stop().attr("aria-valuenow", amount).animate({ "width": amount + "%" }, 50);
+            bar.attr("aria-valuenow", amount).css({ "width": amount + "%", transition: "none" });
         }
     }
 
     // Password strength analyzer.
-    $("#analyze-password").on("keyup", function () {
+    $("#analyze-password").on("input", function () {
         var searchSpace = 0n;
         var combinations = 0n;
         var input = $(this).val();
