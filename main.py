@@ -48,8 +48,8 @@ async def fetch_feed():
 async def parse_template(request: Request, template: str):
     try:
         return templates.TemplateResponse(request=request, name=template)
-    except TemplateNotFound:
-        raise HTTPException(status_code=404)
+    except TemplateNotFound as e:
+        raise HTTPException(status_code=404) from e
 
 
 @app.get("/", response_class=HTMLResponse)

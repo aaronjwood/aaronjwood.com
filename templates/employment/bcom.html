@@ -1,0 +1,23 @@
+{% extends "employer.html" %}
+{% from "employer.html" import language_icons, tool_icons %}
+{% set employer = "Broadcom" %}
+{% set description = "Summary of my work and accomplishments at %s." % employer %}
+{% set title = "Master" %}
+{% set dates = "November 2023 – Present" %}
+{% set experiences = [
+"Tanzu networking technical lead"
+] %}
+{% set languages = [
+language_icons['Go'],
+language_icons['Python'],
+language_icons['Bash']
+] %}
+{% set tools = [
+tool_icons['K8S'],
+tool_icons['GraphQL'],
+tool_icons['Docker'],
+tool_icons['Git'],
+tool_icons['Jira'],
+tool_icons['Jenkins'],
+tool_icons['GitHub']
+] %}
