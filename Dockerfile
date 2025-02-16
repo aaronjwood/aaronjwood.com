@@ -10,6 +10,4 @@ WORKDIR /srv/aaronjwood.com
 COPY . .
 COPY --from=builder /static/node_modules/ static/node_modules/
 RUN pip install -r requirements.txt
-ENV MODE RELEASE
-STOPSIGNAL SIGINT
 CMD ["fastapi", "run", "server.py"]
