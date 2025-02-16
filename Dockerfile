@@ -12,4 +12,4 @@ COPY --from=builder /static/node_modules/ static/node_modules/
 RUN pip install -r requirements.txt
 ENV MODE RELEASE
 STOPSIGNAL SIGINT
-CMD ["pypy3", "main.py"]
+CMD ["fastapi", "run", "server.py"]
