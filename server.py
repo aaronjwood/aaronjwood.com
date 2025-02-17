@@ -1,9 +1,8 @@
 import binascii
 import hashlib
 import zlib
-from datetime import datetime, timedelta
-from urllib.request import HTTPError, urlopen
-from xml.etree import ElementTree
+from pathlib import Path
+from datetime import datetime
 
 import passlib.hash
 
@@ -19,50 +18,34 @@ from jinja2.exceptions import TemplateNotFound
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
-feed_cache = {}
-
-
-async def fetch_feed():
-    res = ""
-    try:
-        data = urlopen("https://github.com/aaronjwood.atom").read()
-        tree = ElementTree.fromstring(data)
-        children = tree.findall("{http://www.w3.org/2005/Atom}entry")
-        for i, child in enumerate(children):
-            if i == 10:
-                break
-
-            content = child.find("{http://www.w3.org/2005/Atom}content").text
-            content = content.replace("https://github.com", "")
-            content = content.replace(
-                'href="aaronjwood', 'href="https://github.com/aaronjwood'
-            )
-            content = content.replace('href="/', 'href="https://github.com/')
-            res += content
-
-        return res
-    except HTTPError:
-        return "Can't display development feed, try again later."
+article_models = Jinja2Templates(directory="templates/articles/models")
 
 
 async def parse_template(request: Request, template: str):
+    models = await get_article_models()
     try:
-        return templates.TemplateResponse(request=request, name=template)
+        return templates.TemplateResponse(
+            request=request, name=template, context={"models": models}
+        )
     except TemplateNotFound as e:
         raise HTTPException(status_code=404) from e
 
 
+async def get_article_models():
+    models = []
+    for template_name in article_models.env.list_templates():
+        template = article_models.env.get_template(template_name)
+        models.append({"name": Path(template.name).stem, "module": template.module})
+
+    models.sort(
+        key=lambda m: datetime.strptime(m["module"].date(), "%B, %Y"), reverse=True
+    )
+    return models
+
+
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
-    global feed_cache
-    if not feed_cache or datetime.now() >= feed_cache.get("time") + timedelta(
-        minutes=30
-    ):
-        feed_cache = {"time": datetime.now(), "data": await fetch_feed()}
-
-    return templates.TemplateResponse(
-        request=request, name="index.html", context={"feed": feed_cache.get("data")}
-    )
+    return await parse_template(request, "index.html")
 
 
 @app.get("/tools/{tool}/", response_class=HTMLResponse)

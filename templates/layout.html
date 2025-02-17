@@ -101,17 +101,9 @@
                         <span class="caret"></span>
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="/articles/resilient-performant-persistence/">Resilient, Performant Persistence</a>
-						<a class="dropdown-item" href="/articles/dynamic-k8s-programming-1/">Dynamic Kubernetes Programming - Part 1</a>
-                        <a class="dropdown-item" href="/articles/the-great-consolidation-recursive-homelab-build/">The
-                            Great Consolidation - Recursive Homelab Build</a>
-                        <a class="dropdown-item" href="/articles/passwords/">Generating/Managing Passwords</a>
-                        <a class="dropdown-item" href="/articles/buffer-overflows/">Buffer Overflows</a>
-                        <a class="dropdown-item" href="/articles/hardening-linux/">Hardening Linux</a>
-                        <a class="dropdown-item" href="/articles/binary-search-trees/">Binary Search Trees</a>
-                        <a class="dropdown-item" href="/articles/the-nsa-and-ssl-tls/">The NSA and SSL/TLS</a>
-                        <a class="dropdown-item" href="/articles/rootkits/">Rootkits</a>
-                        <a class="dropdown-item" href="/articles/database-engines/">Database Engines</a>
+                        {% for model in models %}
+                        <a class="dropdown-item" href="/articles/{{ model.name }}">{{ model.module.title() }}</a>
+                        {% endfor %}
                     </div>
                 </li>
                 <li class="nav-item dropdown">

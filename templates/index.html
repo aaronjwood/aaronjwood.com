@@ -3,13 +3,22 @@
 Home
 {%- endblock -%}
 {% block content %}
-<div class="row">
-    <div class="col-md-12">
-        <div class="row">
-            <div class="col-md-12">
-                <div id="dev-feed">{{ feed|safe }}</div>
+<h3 class="text-center">Articles</h3>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for model in models %}
+    <div class="col">
+        <div class="card border-secondary h-100">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a href="/articles/{{ model.name }}">{{ model.module.title() }}</a>
+                </h5>
+                <p class="card-text">{{ model.module.description() }}</p>
+            </div>
+            <div class="card-footer text-bg-dark">
+                <small class="text-body-secondary">{{ model.module.date() }}</small>
             </div>
         </div>
     </div>
+    {% endfor %}
 </div>
 {% endblock %}

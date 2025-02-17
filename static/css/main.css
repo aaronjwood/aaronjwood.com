@@ -1,17 +1,9 @@
 body {
-    padding-top: 120px;
+    padding-top: 80px;
 }
 
-a {
-    text-decoration: none;
-    font-weight: 500;
-}
-
-#dev-feed img {
-    margin-right: 5px;
-}
-
-#password-analysis-table, .password-strength-table {
+#password-analysis-table,
+.password-strength-table {
     table-layout: fixed;
     word-wrap: break-word;
 }
