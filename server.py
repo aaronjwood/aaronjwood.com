@@ -63,7 +63,7 @@ async def tools(request: Request, tool: str):
 
 @app.get("/employment/{employer}/", response_class=HTMLResponse)
 async def employment(request: Request, employer: str):
-    return await parse_template(request, f"employment/{employer}.html")
+    return await parse_template(request, f"employment/views/{employer}.html")
 
 
 class HashPayload(BaseModel):
