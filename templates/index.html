@@ -3,9 +3,9 @@
 Home
 {%- endblock -%}
 {% block content %}
-<h3 class="text-center">Articles</h3>
+<h3 class="text-center">Latest Articles</h3>
 <div class="row row-cols-1 row-cols-md-3 g-4">
-    {% for model in models %}
+    {% for model in models[:9] %}
     <div class="col">
         <div class="card border-secondary h-100">
             <div class="card-body">
