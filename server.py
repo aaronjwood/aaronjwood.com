@@ -22,6 +22,18 @@ article_templates = Jinja2Templates(directory="templates/articles/models")
 tool_templates = Jinja2Templates(directory="templates/tools/models")
 
 
+async def get_models(templates: Jinja2Templates, **kwargs):
+    models = []
+    for template_name in templates.env.list_templates():
+        template = templates.env.get_template(template_name)
+        models.append({"name": Path(template.name).stem, "module": template.module})
+
+    if kwargs:
+        models.sort(**kwargs)
+
+    return models
+
+
 async def parse_template(request: Request, template: str):
     article_models = await get_models(
         article_templates,
@@ -37,18 +49,6 @@ async def parse_template(request: Request, template: str):
         )
     except TemplateNotFound as e:
         raise HTTPException(status_code=404) from e
-
-
-async def get_models(templates: Jinja2Templates, **kwargs):
-    models = []
-    for template_name in templates.env.list_templates():
-        template = templates.env.get_template(template_name)
-        models.append({"name": Path(template.name).stem, "module": template.module})
-
-    if kwargs:
-        models.sort(**kwargs)
-
-    return models
 
 
 @app.get("/", response_class=HTMLResponse)
