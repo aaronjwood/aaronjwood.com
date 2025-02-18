@@ -1,0 +1,14 @@
+{%- import "tools/models/character.jinja" as data -%}
+{% extends "tool.html" %}
+{% block tool %}
+<div class="row mt-4">
+    <div class="col-md-12 text-center">
+        <textarea class="form-control" rows="10" id="character-box"></textarea>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 text-center">
+        Number of characters: <span id="num-characters"></span>
+    </div>
+</div>
+{% endblock %}

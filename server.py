@@ -18,28 +18,36 @@ from jinja2.exceptions import TemplateNotFound
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
-article_models = Jinja2Templates(directory="templates/articles/models")
+article_templates = Jinja2Templates(directory="templates/articles/models")
+tool_templates = Jinja2Templates(directory="templates/tools/models")
 
 
 async def parse_template(request: Request, template: str):
-    models = await get_article_models()
+    article_models = await get_models(
+        article_templates,
+        key=lambda m: datetime.strptime(m["module"].date(), "%B, %Y"),
+        reverse=True,
+    )
+    tool_models = await get_models(tool_templates)
     try:
         return templates.TemplateResponse(
-            request=request, name=template, context={"models": models}
+            request=request,
+            name=template,
+            context={"models": {"articles": article_models, "tools": tool_models}},
         )
     except TemplateNotFound as e:
         raise HTTPException(status_code=404) from e
 
 
-async def get_article_models():
+async def get_models(templates: Jinja2Templates, **kwargs):
     models = []
-    for template_name in article_models.env.list_templates():
-        template = article_models.env.get_template(template_name)
+    for template_name in templates.env.list_templates():
+        template = templates.env.get_template(template_name)
         models.append({"name": Path(template.name).stem, "module": template.module})
 
-    models.sort(
-        key=lambda m: datetime.strptime(m["module"].date(), "%B, %Y"), reverse=True
-    )
+    if kwargs:
+        models.sort(**kwargs)
+
     return models
 
 
@@ -50,7 +58,7 @@ async def index(request: Request):
 
 @app.get("/tools/{tool}/", response_class=HTMLResponse)
 async def tools(request: Request, tool: str):
-    return await parse_template(request, f"tools/{tool}.html")
+    return await parse_template(request, f"tools/views/{tool}.html")
 
 
 @app.get("/employment/{employer}/", response_class=HTMLResponse)

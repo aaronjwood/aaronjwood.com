@@ -80,18 +80,9 @@
                         <span class="caret"></span>
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="/tools/character/">
-                            Character Counter
-                        </a>
-                        <a class="dropdown-item" href="/tools/hash/">
-                            Hash Generator
-                        </a>
-                        <a class="dropdown-item" href="/tools/hex/">
-                            Hex Generator
-                        </a>
-                        <a class="dropdown-item" href="/tools/password-endurance/">
-                            Password Endurance
-                        </a>
+                        {% for model in models["tools"] %}
+                        <a class="dropdown-item" href="/tools/{{ model.name }}">{{ model.module.title() }}</a>
+                        {% endfor %}
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -101,7 +92,7 @@
                         <span class="caret"></span>
                     </a>
                     <div class="dropdown-menu">
-                        {% for model in models %}
+                        {% for model in models["articles"] %}
                         <a class="dropdown-item" href="/articles/{{ model.name }}">{{ model.module.title() }}</a>
                         {% endfor %}
                     </div>

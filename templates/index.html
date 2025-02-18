@@ -5,7 +5,7 @@ Home
 {% block content %}
 <h3 class="text-center">Latest Articles</h3>
 <div class="row row-cols-1 row-cols-md-3 g-4">
-    {% for model in models[:9] %}
+    {% for model in models["articles"][:9] %}
     <div class="col">
         <div class="card border-secondary h-100">
             <div class="card-body">
@@ -16,6 +16,22 @@ Home
             </div>
             <div class="card-footer text-bg-dark">
                 <small class="text-body-secondary">{{ model.module.date() }}</small>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<br>
+<h3 class="text-center">Latest Tools</h3>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for model in models["tools"][:9] %}
+    <div class="col">
+        <div class="card border-secondary h-100">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a href="/tools/{{ model.name }}">{{ model.module.title() }}</a>
+                </h5>
+                <p class="card-text">{{ model.module.description() }}</p>
             </div>
         </div>
     </div>

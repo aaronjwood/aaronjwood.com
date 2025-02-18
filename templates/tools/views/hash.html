@@ -1,18 +1,6 @@
-{% extends "layout.html" %}
-{%- block title -%}
-    Hash Generator
-{%- endblock -%}
-{%- block description -%}
-    Generates hashes from the supplied text. NTLM, LM, MD5, SHA1, MySQL, Cisco, LDAP, and more are supported!
-{%- endblock -%}
-{% block content %}
-    <div class="row">
-        <div class="col-md-12">
-            <div class="page-header text-center">
-                <h2>Hash Generator</h2>
-            </div>
-        </div>
-    </div>
+{%- import "tools/models/hash.jinja" as data -%}
+{% extends "tool.html" %}
+{% block tool %}
     <div class="row mt-4">
         <div class="col-md-12 text-center">
             <textarea class="form-control" type="text" id="hash-text"></textarea>

@@ -1,18 +1,6 @@
-{% extends "layout.html" %}
-{%- block title -%}
-    Hex Generator
-{%- endblock -%}
-{%- block description -%}
-    Converts strings and numbers to hexadecimal.
-{%- endblock -%}
-{% block content %}
-    <div class="row">
-        <div class="col-md-12">
-            <div class="page-header text-center">
-                <h2>Hex Generator</h2>
-            </div>
-        </div>
-    </div>
+{%- import "tools/models/hex.jinja" as data -%}
+{% extends "tool.html" %}
+{% block tool %}
     <div class="row mt-4">
         <div class="col-md-12 text-center">
             <label class="radio-inline">
