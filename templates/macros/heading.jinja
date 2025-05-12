@@ -1,0 +1,4 @@
+{%- macro permaheading(level, text) -%}
+    {%- set id = text | lower | replace(" ", "-") | replace("?", "") | replace("!", "") -%}
+    <h{{ level }} id="{{ id }}">{{ text }} <a class="permalink" href="#{{ id }}">&para;</a></h{{ level }}>
+{%- endmacro -%}

@@ -3,7 +3,7 @@
 {% block article %}
     <div class="row mt-4">
         <div class="col-md-12">
-            <h3>Reworking The Great Consolidation</h3>
+            {{ heading.permaheading(3, "Reworking The Great Consolidation") }}
             <p>
                 A lot has changed since I finished my <a href="/articles/the-great-consolidation-recursive-homelab-build/">recursive homelab build</a> two years ago.
                 While an <em>excellent</em> learning experience, using Windows Server as the hypervisor and ZFS inside of a VM was the wrong choice.
@@ -12,7 +12,7 @@
                 As far as the physical storage layout goes not a whole lot has changed.
                 I have changed caching strategies a few times as I've learned how to better tune ZFS for my various workloads, otherwise the only real change is the addition of more physical disks.
             </p>
-            <h3>Why ZFS?</h3>
+            {{ heading.permaheading(3, "Why ZFS?") }}
             <p>
                 ZFS is a powerful, complicated file system. Over time I found that you really need to tune it to your workload in order to keep performance relatively high.
                 The main reason for why I chose ZFS is its superior claims to resiliency among other things:
@@ -30,24 +30,24 @@
                 </ol>
                 If you care about your data you want to be using a file system like this.
             </p>
-            <h3>Physical Layout</h3>
+            {{ heading.permaheading(3, "Physical Layout") }}
             <p>
                 Since I'm using ZFS this is easy to describe as it is very much a <a target="_blank" href="https://en.wikipedia.org/wiki/Non-RAID_drive_architectures#JBOD">JBOD.</a>
             </p>
-            <h5>HDDs</h5>
+            {{ heading.permaheading(5, "HDDs") }}
             <p>
                 There are 12 SATA III spinning disks that sit inside the Norco enclosure.
                 Not every disk is of the same capacity but they are all Western Digital's.
                 None of the disks use <a target="_blank" href="https://en.wikipedia.org/wiki/Shingled_magnetic_recording">SMR</a> which I explicitly made sure of when I was building this out.
                 The only disks that use SMR are a couple of spares that I use for cold storage backups. 
             </p>
-            <h5>SSDs</h5>
+            {{ heading.permaheading(5, "SSDs") }}
             <p>
                 The various NAND flash disks are a bit more mixed.
                 There are two HP 2TB PCIe 3.0 NVMe drives, two Kingston 240GB SATA III drives, and three Crucial SATA III drives.
                 All of these drives live either on the <a target="_blank" href="https://www.asrock.com/mb/amd/x570%20taichi/">motherboard</a> (NVMes) or somewhere in the <a target="_blank" href="https://www.corsair.com/us/en/Categories/Products/Cases/Carbide-Series%E2%84%A2-Air-540-High-Airflow-ATX-Cube-Case/p/CC-9011030-WW">case.</a>
             </p>
-            <h5>Why So Many Disks?</h5>
+            {{ heading.permaheading(5, "Why So Many Disks?") }}
             <p>
                 I use my server for <em>many</em> things, usually in parallel and for multiple people connecting from different places:
                 <ul>
@@ -94,11 +94,11 @@
                 Other than wanting lots of raw storage to last me many years I also wanted as much performance as possible.
                 This is partly why I originally went with a 3950X, the 16 cores/32 threads are very much needed!
             </p>
-            <h3>Logical Layout</h3>
+            {{ heading.permaheading(3, "Logical Layout") }}
             <p>
                 There are two pools, one backed by the NVMe drives and another backed by the SATA HDDs/SSDs.
             </p>
-            <h5>Faster But Small</h5>
+            {{ heading.permaheading(5, "Faster But Small") }}
             <p>
                 This is where the host and all of the VM block devices live.
                 The only exception to this is the block device that attaches to the Windows VM as it is far too big to fit into this pool.
@@ -117,7 +117,7 @@ config:
 errors: No known data errors
                 </pre>
             </p>
-            <h5>Slower But Large</h5>
+            {{ heading.permaheading(5, "Slower But Large") }}
             <p>
                 This is where everything else lives.
                 <pre>
@@ -158,7 +158,7 @@ config:
 errors: No known data errors
                 </pre>
             </p>
-            <h3>Performance</h3>
+            {{ heading.permaheading(3, "Performance") }}
             <p>
                 There are a few major factors that contribute to improving performance across the board:
                 <ol>
@@ -181,7 +181,7 @@ errors: No known data errors
                 For example, many modern drives use 4k sector size. If your pool is filled with these drives then you'd want an ashift value of 12 as 2^12 = 4096.
                 Some newer SSDs use an 8k sector size which would necessitate an ashift value of 13.
             </p>
-            <h3>Resiliency</h3>
+            {{ heading.permaheading(3, "Resiliency") }}
             <p>
                 You'll notice one thing in common with the two pools above: they both make use of <a target="_blank" href="https://openzfs.github.io/openzfs-docs/Performance%20and%20Tuning/Workload%20Tuning.html#pool-geometry">mirrored vdevs.</a>
                 Mirrored vdevs have a few advantages:
@@ -198,7 +198,7 @@ errors: No known data errors
                 Each vdev can survive one disk failure (total of 6 disk failures) without the pool encountering any data loss.
                 The catch is if any one vdev has both of its disks fail there is immediate data loss.
             </p>
-            <h3>Efficiency</h3>
+            {{ heading.permaheading(3, "Efficiency") }}
             <p>
                     ZFS offers many ways to transparently compress your data, and since I do care about performance I opted to stick with <a target="_blank" href="https://github.com/lz4/lz4">LZ4.</a>
                     It is even the <a target="_blank" href="https://openzfs.github.io/openzfs-docs/Performance%20and%20Tuning/Workload%20Tuning.html#lz4-compression">recommended algorithm.</a>
@@ -212,13 +212,13 @@ vault/vz/vm-104-disk-0                          compressratio  1.29x  -
                     </pre>
                     That is a 29% savings on the block device's original size of ~11.6TB.
             </p>
-            <h3>Backup Strategy</h3>
+            {{ heading.permaheading(3, "Backup Strategy") }}
             <p>
                 All of the data on the NVMe-backed pool is backed up to the other pool on a nightly basis.
                 Those backups along with most of the other data in the large pool is backed up to cold storage on a weekly basis using snapshots with ZFS replication.
                 Backups make use of the same compression, record size, and block size settings from the source pools but are encrypted using AES-256 <a target="_blank" href="https://en.wikipedia.org/wiki/Galois/Counter_Mode">GCM.</a>
             </p>
-            <h3>Closing Thoughts, Results, And Recommendations</h3>
+            {{ heading.permaheading(3, "Closing Thoughts, Results, And Recommendations") }}
             <p>
                 After using ZFS for many years I can confidently recommend it.
                 It has saved me more times than I can remember, and it provides an excellent foundation for whatever you're doing.
@@ -233,11 +233,11 @@ vault/vz/vm-104-disk-0                          compressratio  1.29x  -
             <p>
                 If you're interested to follow a setup like mine here is how you can achieve it.
             </p>
-            <h5>Mirrored Root File System Pool</h5>
+            {{ heading.permaheading(5, "Mirrored Root File System Pool") }}
             <p>
                 I'm currently using Proxmox so I relied on <a target="_blank" href="https://pve.proxmox.com/wiki/ZFS_on_Linux#_installation_as_root_file_system">their tooling</a> to accomplish this.
             </p>
-            <h5>Large Pool</h5>
+            {{ heading.permaheading(5, "Large Pool") }}
             <p>
                 <pre>zpool create -o ashift=12 POOL_NAME mirror DISK1_ID DISK2_ID mirror DISK3_ID DISK4_ID ... # use a different ashift if your devices aren't using 4k sectors</pre>
                 <pre>zfs set xattr=sa POOL_NAME # pool-wide</pre>
@@ -247,7 +247,7 @@ vault/vz/vm-104-disk-0                          compressratio  1.29x  -
                 <pre>zpool add POOL_NAME cache DISK1_ID DISK2_ID ... # adds an L2ARC to the pool</pre>
                 <pre>zpool add POOL_NAME special mirror DISK1_ID DISK2_ID # adds a mirrored special vdev to the pool</pre>
             </p>
-            <h5>Cold Storage Pool(s)</h5>
+            {{ heading.permaheading(5, "Cold Storage Pool(s)") }}
             <p>
                 <pre>zpool create -o ashift=12 -O encryption=aes-256-gcm -O keyformat=passphrase -O keylocation=prompt POOL_NAME DEVICE_NAME</pre>
             </p>

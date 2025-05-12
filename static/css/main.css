@@ -2,6 +2,20 @@ body {
     padding-top: 80px;
 }
 
+.permalink {
+    visibility: hidden;
+}
+
+:is(h1, h2, h3, h4, h5, h6):hover > .permalink {
+    visibility: visible;
+}
+
+/* Let scrollspy work correctly with the fixed nav. */
+h1, h2, h3, h4, h5, h6 {
+    padding-top: 65px;
+    margin-top: -65px;
+}
+
 #password-analysis-table,
 .password-strength-table {
     table-layout: fixed;

@@ -3,7 +3,7 @@
 {% block article %}
     <div class="row mt-4">
         <div class="col-md-12">
-            <h3>What are rootkits?</h3>
+            {{ heading.permaheading(3, "What are rootkits?") }}
 
             <p>
                 Rootkits are primarily developed for persistent privileged access to a computer so that other malware
@@ -15,7 +15,7 @@
                 rootkits out there it’s difficult to say what their "normal" patterns are since they’re always changing.
             </p>
 
-            <h3>How severe are rootkits compared to trojans, viruses, and worms?</h3>
+            {{ heading.permaheading(3, "How severe are rootkits compared to trojans, viruses, and worms?") }}
 
             <p>
                 Rootkits are the worst type of malware you can get. Especially when they incorporate uncommon additional
@@ -28,7 +28,7 @@
                 called API/function hooking.
             </p>
 
-            <h3>How am I supposed to remove rootkits if they can’t be detected?</h3>
+            {{ heading.permaheading(3, "How am I supposed to remove rootkits if they can’t be detected?") }}
 
             <p>
                 There are special tools designed for this process. Even then these tools don’t detect "all" rootkits,
@@ -42,7 +42,7 @@
                 from other generic malware scanning tools.
             </p>
 
-            <h3>Tools</h3>
+            {{ heading.permaheading(3, "Tools") }}
 
             <p>
                 <a href="http://www.gmer.net/" target="_blank">GMER</a> - This tool scans for many hidden objects and

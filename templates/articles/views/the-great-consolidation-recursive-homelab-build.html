@@ -3,7 +3,7 @@
 {% block article %}
     <div class="row mt-4">
         <div class="col-md-12">
-            <h3>The Beginning</h3>
+            {{ heading.permaheading(3, "The Beginning") }}
             <p>
                 In 2016 I decided to build a server that I could use for my home network. First it was only a NAS. I experimented with
                 <a href="https://www.freenas.org/">FreeNAS</a> for a while but found the hardware support from the kernel to be abysmal. To be fair,
@@ -15,7 +15,7 @@
                 <br /><br />
                 So yes, other than the good amount of RAM the hardware generally sucked.
             </p>
-            <h3>A Small Bump</h3>
+            {{ heading.permaheading(3, "A Small Bump") }}
             <p>
                 I got unlucky with one of the batches of RAM I got:
                 <br />
@@ -23,7 +23,7 @@
                 <br />
                 After a small delay of RMA'ing one of the 2x8GB kits I was back in business.
             </p>
-            <h3>The Move To Linux</h3>
+            {{ heading.permaheading(3, "The Move To Linux") }}
             <p>
                 As I mentioned earlier, the hardware support for what I had with FreeBSD was terrible. I wasn't able to get a lot of my USB 3 ports recognized, 
                 and I had found overall system performance to be no match for an equivalent Linux setup when running through a lot of different benchmarks.
@@ -36,7 +36,7 @@
                 <br />
                 <script src="https://gist.github.com/aaronjwood/735ceae49afdf4e5ca1fabaa31acf54f.js"></script>
             </p>
-            <h3>Evolving Purpose</h3>
+            {{ heading.permaheading(3, "Evolving Purpose") }}
             <p>
                 At some point a year or two later I ended up getting gigabit WAN service. I found that the consumer-class router I had could barely handle
                 the load when saturating the WAN link which was very disappointing. I'd often see my speeds throttled back. If my overall network had many
@@ -53,7 +53,7 @@
                 <br />
                 <script src="https://gist.github.com/aaronjwood/f70cf539373a9dee46a3c70464feee63.js"></script>
             </p>
-            <h3>An Immediate Problem</h3>
+            {{ heading.permaheading(3, "An Immediate Problem") }}
             <p>
                 Right away I found that many things were not working inside my LAN. Things that I had not explicitly blocked were being blocked. After some
                 investigation I found out that some sysctls were needed to prevent my netfilter rules from applying to my LAN:
@@ -64,7 +64,7 @@
                 <a href="https://bugs.launchpad.net/ubuntu/+source/procps/+bug/50093">Turns out that some sysctls are ignored on boot due to timing issues.</a>
                 This meant that I needed to put my own workaround in place to get these settings to stick across reboots. <em>What a pain.</em> 
             </p>
-            <h3>A Small Annoyance</h3>
+            {{ heading.permaheading(3, "A Small Annoyance") }}
             <p>
                 Many Linux distros are generally great at handling updates. It's not often that you need to restart the system compared to Windows where nearly
                 <em>every</em> update I get seems to require a reboot. Still, I wanted less downtime since my server was now my primary gateway. At the time I
@@ -72,7 +72,7 @@
                 with him about it for some time I decided to bring this kind of functionality into my server using <a href="https://ubuntu.com/livepatch">Livepatch.</a>
                 Getting this in place was great as it cut my downtime to almost zero.
             </p>
-            <h3>Another Small Annoyance</h3>
+            {{ heading.permaheading(3, "Another Small Annoyance") }}
             <p>
                 After a while I realized that I never set myself up for IPv6. I went back to the drawing board for configuring netfilter and dnsmasq and thought
                 it'd be relatively simple to get it working. It ended up being a much bigger pain than I anticipated for a few reasons. Fist, I was pretty new
@@ -90,7 +90,7 @@
                 <br />
                 <script src="https://gist.github.com/aaronjwood/5b5d1844a78035d624b7feeed773345b.js"></script>
             </p>
-            <h3>The End Of An Era</h3>
+            {{ heading.permaheading(3, "The End Of An Era") }}
             <p>
                 Now that I had made myself a pretty nice router with the server I already had I could ditch my old, junky consumer-grade router. There was one more thing
                 I wanted to do before I considered this project done and that was getting this site (and a few other things) hosted on it. This was pretty straightforward
@@ -112,7 +112,7 @@
                 Its provided me with great performance and redudancy for the last four years. I've never had it break on me, corrupt my data, or crash the kernel.
                 I felt this was significant to mention since ZFS on Linux is not yet 1.0. I consider using a filesystem that's not yet 1.0 a <strong>big</strong> risk.
             </p>
-            <h3>A New Era - Getting Rid Of My Old Workstation And Server</h3>
+            {{ heading.permaheading(3, "A New Era - Getting Rid Of My Old Workstation And Server") }}
             <p>
                 Fast forward to early 2020. I find my workstation I built back in 2013 for gaming, development, and various media workloads to be on its last legs.
                 I had built this machine with a i7 4770K (Haswell), 16 GB DDR3, a Z87 chipset, and some fancy (at the time) SATA SSDs:
@@ -141,7 +141,7 @@
                 to spare. The only challenge was figuring out what to do with all of my spinning disks where ZFS was taking care of all the important stuff. This is where things
                 started to get <em>really</em> <strong>fun.</strong>
             </p>
-            <h3>Turning My Upgraded Workstation Into... Everything</h3>
+            {{ heading.permaheading(3, "Turning My Upgraded Workstation Into... Everything") }}
             <p>
                 I've always used Windows on my workstation, mostly for gaming. This was a problem as there was no way I was moving away from ZFS or Linux. I had two options here:
                 run Linux as the host (and a type 1 hypervisor) and passthrough my GPU to a Windows guest, or run Windows as the host and turn all of my Linux stuff into VMs via Hyper-V.
@@ -151,21 +151,21 @@
                 host when it's passed through to the guest. For these reasons I ended up going with Windows on the host as I normally have it. I thought it would be quick and easy to get this
                 going, but I was <strong>wrong.</strong>
             </p>
-            <h3>One Big Bump</h3>
+            {{ heading.permaheading(3, "One Big Bump") }}
             <p>
                 I thought I'd be able to stick with Windows 10 Pro but I quickly found out that it does not support
                 <a href="https://docs.microsoft.com/en-us/windows-server/virtualization/hyper-v/plan/plan-for-deploying-devices-using-discrete-device-assignment">discreet device assignment (DDA).</a>
                 This is a deal breaker since DDA is required to pass through PCIe devices. I found no way of installing Windows 10 as a type 1 hypervisor, enabling Hyper-V in Windows 10
                 seemed to operate as a standard type 2 hypervisor. Now what?
             </p>
-            <h3>Change Of Plans</h3>
+            {{ heading.permaheading(3, "Change Of Plans") }}
             <p>
                 After some research and experimentation I decided that using Windows Server as my host should fulfill all of my requirements. This was a bit of a pain in the beginning
                 (hours of extra work) as I had a tough time getting some of my drivers installed correctly without having to disable secure boot and load unsigned/modified drivers.
                 Once I got all the drivers in place and tuned the OS a bit to get my gaming environment the same as it was before it was time to move onto creating the Linux VMs to
                 replace my old server.
             </p>
-            <h3>The First VM</h3>
+            {{ heading.permaheading(3, "The First VM") }}
             <p>
                 The very first thing I needed to migrate was my gateway. Setting up the Linux VM was straightforward, but how was I going to get this thing to control my entire network?
                 I decided to forgo using virtualized NICs with <a href="https://en.wikipedia.org/wiki/Single-root_input/output_virtualization">SRV-IO</a> and just pass the entire NIC
@@ -190,7 +190,7 @@
                 You'll notice a pattern here: anything external to the workstation is connected to my physical NIC inside of the workstation for LAN/WAN access. Anything internal to the
                 workstation (including the workstation itself) is attached to the vSwitch for LAN/WAN access.
             </p>
-            <h3>The Second VM</h3>
+            {{ heading.permaheading(3, "The Second VM") }}
             <p>
                 My awesome boss at the time gave me his old JBOD enclosure which was a Norco (no idea of the model) with a
                 <a href="http://www.norcotek.com/wp-content/uploads/2015/11/ARC_8026_manual.pdf">ARC-8026</a> inside. This was a godsend as this solved a huge problem for me when moving
@@ -202,7 +202,7 @@
                 <a href="https://www.dell.com/en-us/shop/dell-sas-12gbps-host-bus-adapter-external-controller-low-profile/apd/405-aaes">this SAS 3008 card</a> as it was very well supported by
                 Linux and also provided a bit of future proofing for me.
             </p>
-            <h3>A Very Painful Bump</h3>
+            {{ heading.permaheading(3, "A Very Painful Bump") }}
             <p>
                 Before throwing the HBA into my workstation I wanted to make sure the firmware was up to date as it came with an extremely old version. As I was updating the firmware
                 failed halfway through. This can be fatal on other devices but thankfully HBAs seem to be pretty hard to brick. The problem was that I used generic firmware from Broadcom
@@ -213,7 +213,7 @@
                 <br />
                 <img class="img-fluid" src="/static/images/hba-flash.jpg" />
             </p>
-            <h3>Finising The Second VM</h3>
+            {{ heading.permaheading(3, "Finising The Second VM") }}
             <p>
                 ZFS expects direct hardware access to the devices it manages. There was no better way to accomplish this other than passing through the HBA card to the VM. I used almost the
                 same exact commands that I did to pass through the NIC to the gateway VM to passthrough the HBA card to this VM. Similar to what I did with my host, I added a virtual network adapter
@@ -223,13 +223,13 @@
                 Another route I could have taken would have been to pass through the individual disks using Hyper-V, but after a lot of research this seemed to carry a significant amount
                 of risk since it effectively blinds ZFS to parts of the hardware (this is a bigger topic with many intricate details). This was definitely <em>not</em> an option for my setup.
             </p>
-            <h3>The Third And Boring/Final VM</h3>
+            {{ heading.permaheading(3, "The Third And Boring/Final VM") }}
             <p>
                 My last VM was very simple to setup as it mostly contained my Nginx reverse proxy setup that I had on my old server from before. There are a few applications/services that
                 sit behind this, some public facing, some not, but all are over <a href="https://www.ssllabs.com/ssltest/analyze.html?d=aaronjwood.com&hideResults=on">TLS.</a> Again, this VM
                 was given a virtual network adapter connected to my vSwitch for LAN/WAN access.
             </p>
-            <h3>Finished (Mostly)</h3>
+            {{ heading.permaheading(3, "Finished (Mostly)") }}
             <p>
                 While I refined my monitoring and resouce allocation for a while afterwards I was mostly done. I'm leaving out some of the later work that was done for other articles:
                 <ul>

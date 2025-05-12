@@ -11,7 +11,7 @@
             This will be a multipart series so lets first focus on how you would apply objects into Kubernetes in a
             generic fashion.
         </p>
-        <h3>Creating The Apply Method</h3>
+        {{ heading.permaheading(3, "Creating The Apply Method") }}
         <p>
             First let's stub out what our method will look like.
             <script src="https://gist.github.com/aaronjwood/1324208ef4c3991f66fa332a25092a7c.js"></script>
@@ -29,7 +29,7 @@
             The real chunk of this work comes from parsing a manifest (YAML) and converting each document in that
             manifest into a resource.
         </p>
-        <h3>Parsing Manifests</h3>
+        {{ heading.permaheading(3, "Parsing Manifests") }}
         <p>
             Parsing documents out of a manifest is the first thing we need to do here.
             Once we are able to return back a slice of documents we can then turn each document into a resource which
@@ -42,7 +42,7 @@
             Note that the original way I had gone with was roughly 100x faster when we benchmarked it so if you require
             more performance in this area I urge you <strong>not</strong> to use regular expressions.
         </p>
-        <h3>Converting Documents Into Resources</h3>
+        {{ heading.permaheading(3, "Converting Documents Into Resources") }}
         <p>
             Now that we are able to work with documents from a manifest we can focus on converting them into resources. There are three key things we need to do:
         </p>
@@ -60,13 +60,13 @@
             Providing the REST mapping is the last piece.
             <script src="https://gist.github.com/aaronjwood/e852f79f5ccc212e4ce5c8b5864a50c6.js"></script>
         </p>
-        <h3>Stitching It Together</h3>
+        {{ heading.permaheading(3, "Stitching It Together") }}
         <p>
             Now that we have all of the required pieces built out we can put it all together.
             <script src="https://gist.github.com/aaronjwood/cccef38490e14e5eadfa8ed1c769c851.js"></script>
             That's it! You now have a fully functioning, dynamic kubernetes object applier.
         </p>
-        <h3>What's Next</h3>
+        {{ heading.permaheading(3, "What's Next") }}
         <p>
             In part 2 we will look at the handling updates as part of our apply logic.
             We will cover the edge cases that need to be handled, especially the ones that are not so obvious or
