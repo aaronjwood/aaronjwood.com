@@ -55,17 +55,17 @@ async def parse_template(request: Request, template: str):
 
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
-    return await parse_template(request, "index.html")
+    return await parse_template(request, "index.jinja")
 
 
 @app.get("/tools/{tool}/", response_class=HTMLResponse)
 async def tools(request: Request, tool: str):
-    return await parse_template(request, f"tools/views/{tool}.html")
+    return await parse_template(request, f"tools/views/{tool}.jinja")
 
 
 @app.get("/employment/{employer}/", response_class=HTMLResponse)
 async def employment(request: Request, employer: str):
-    return await parse_template(request, f"employment/views/{employer}.html")
+    return await parse_template(request, f"employment/views/{employer}.jinja")
 
 
 class HashPayload(BaseModel):
@@ -105,4 +105,4 @@ async def do_hash(payload: HashPayload):
 
 @app.get("/articles/{article}/", response_class=HTMLResponse)
 async def articles(request: Request, article: str):
-    return await parse_template(request, f"articles/views/{article}.html")
+    return await parse_template(request, f"articles/views/{article}.jinja")
