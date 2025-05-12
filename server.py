@@ -22,7 +22,7 @@ article_templates = Jinja2Templates(directory="templates/articles/models")
 tool_templates = Jinja2Templates(directory="templates/tools/models")
 
 
-async def get_models(templates: Jinja2Templates, **kwargs):
+def get_models(templates: Jinja2Templates, **kwargs):
     models = []
     for template_name in templates.env.list_templates():
         template = templates.env.get_template(template_name)
@@ -34,13 +34,15 @@ async def get_models(templates: Jinja2Templates, **kwargs):
     return models
 
 
+article_models = get_models(
+    article_templates,
+    key=lambda m: datetime.strptime(m["module"].date(), "%B, %Y"),
+    reverse=True,
+)
+tool_models = get_models(tool_templates)
+
+
 async def parse_template(request: Request, template: str):
-    article_models = await get_models(
-        article_templates,
-        key=lambda m: datetime.strptime(m["module"].date(), "%B, %Y"),
-        reverse=True,
-    )
-    tool_models = await get_models(tool_templates)
     try:
         return templates.TemplateResponse(
             request=request,
