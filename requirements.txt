@@ -22,7 +22,7 @@ psutil==5.9.8
 pydantic==2.10.6
 pydantic_core==2.27.2
 Pygments==2.19.1
-python-dotenv==1.0.1
+python-dotenv==1.2.2
 python-multipart==0.0.20
 PyYAML==6.0.2
 rich==13.9.4
